@@ -34,3 +34,7 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
 ## License
 
 This project is developed under [MIT License](LICENSE.txt).
+
+### Attribution
+
+- [Pixelify Sans Variable Font](https://fonts.google.com/specimen/Pixelify+Sans) licensed under the [OFL](https://openfontlicense.org/)

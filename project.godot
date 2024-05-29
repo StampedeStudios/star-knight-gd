@@ -11,9 +11,18 @@ config_version=5
 [application]
 
 config/name="Star Knight"
+run/main_scene="res://levels/level_1.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="Star Knight"
+
+[filesystem]
+
+import/blender/enabled=false
+
+[gui]
+
+theme/custom="res://assets/user-interface/theme.tres"
+theme/custom_font="res://assets/fonts/PixelifySans.ttf"

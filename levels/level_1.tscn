@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://d3o5f2fpj8rru"]
+[gd_scene load_steps=2 format=3 uid="uid://d3o5f2fpj8rru"]
+
+[ext_resource type="PackedScene" uid="uid://rno3jbxogp8r" path="res://scenes/user-interface/menu.tscn" id="1_wejki"]
 
 [node name="Level1" type="Node2D"]
+
+[node name="menu" parent="." instance=ExtResource("1_wejki")]
