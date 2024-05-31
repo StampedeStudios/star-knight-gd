@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Star Knight"
-run/main_scene="res://levels/level_1.tscn"
+run/main_scene="res://levels/Level1.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 
 [dotnet]
@@ -24,5 +24,5 @@ import/blender/enabled=false
 
 [gui]
 
-theme/custom="res://assets/user-interface/theme.tres"
+theme/custom="res://assets/user_interface/Theme.tres"
 theme/custom_font="res://assets/fonts/PixelifySans.ttf"
