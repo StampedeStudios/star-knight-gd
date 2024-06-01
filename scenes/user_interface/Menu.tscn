@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://rno3jbxogp8r"]
 
+[ext_resource type="Script" path="res://scripts/user_inteface/menu.gd" id="1_0vuea"]
 [ext_resource type="Theme" uid="uid://ba4822upgnunc" path="res://assets/user_interface/Theme.tres" id="1_ntu2w"]
 [ext_resource type="Texture2D" uid="uid://bvhe4dwmndnov" path="res://assets/user_interface/shortcuts/g.png" id="2_b1p3a"]
 [ext_resource type="Texture2D" uid="uid://cfp3xnrkytyp5" path="res://assets/user_interface/shortcuts/h.png" id="3_754d3"]
-[ext_resource type="Script" path="res://scripts/user_inteface/start_btn.gd" id="3_eyda1"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_jvx4s"]
 keycode = 71
@@ -20,6 +20,7 @@ unicode = 72
 events = [SubResource("InputEventKey_do0j6")]
 
 [node name="Menu" type="CanvasLayer"]
+script = ExtResource("1_0vuea")
 
 [node name="BtnContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
@@ -41,7 +42,6 @@ shortcut = SubResource("Shortcut_tj87o")
 shortcut_in_tooltip = false
 text = "START "
 icon = ExtResource("2_b1p3a")
-script = ExtResource("3_eyda1")
 
 [node name="HowToPlayBtn" type="Button" parent="BtnContainer"]
 layout_mode = 2
@@ -50,3 +50,6 @@ shortcut = SubResource("Shortcut_rhfhm")
 shortcut_in_tooltip = false
 text = "HOW TO PLAY "
 icon = ExtResource("3_754d3")
+
+[connection signal="pressed" from="BtnContainer/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="BtnContainer/HowToPlayBtn" to="." method="_on_how_to_play_btn_pressed"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct54s10ac24la"]
+
+[ext_resource type="Script" path="res://scripts/user_inteface/user_interface.gd" id="1_38enu"]
+[ext_resource type="PackedScene" uid="uid://rno3jbxogp8r" path="res://scenes/user_interface/Menu.tscn" id="1_qfbop"]
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_38enu")
+
+[node name="Menu" parent="." instance=ExtResource("1_qfbop")]
+
+[connection signal="control_triggered" from="Menu" to="." method="_on_menu_control_triggered"]
