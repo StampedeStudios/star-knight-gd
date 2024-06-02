@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://ead0ewemcswu"]
+
+[ext_resource type="Script" path="res://scripts/user_inteface/how_to_play_section.gd" id="1_gl0v8"]
+[ext_resource type="Texture2D" uid="uid://bvhe4dwmndnov" path="res://assets/user_interface/shortcuts/g.png" id="2_sirvs"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_rnumx"]
+keycode = 71
+unicode = 71
+
+[sub_resource type="Shortcut" id="Shortcut_ndyib"]
+events = [SubResource("InputEventKey_rnumx")]
+
+[node name="HowToPlaySection" type="CanvasLayer"]
+offset = Vector2(0.5, 0.5)
+transform = Transform2D(1, 0, 0, 1, 0.5, 0.5)
+script = ExtResource("1_gl0v8")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HowToPlayTxt" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]# How to play Star Knight[/b]
+
+[b]## Movement[/b]
+- User arrow keys to move;
+- Use <spacebar> to shoot;
+- Use <R> to reload.
+
+[b]## Goal[/b]
+- Don't die;
+- Kill as much enemies you are able to;
+- Pick up power-ups and ammo packs along the way."
+
+[node name="BackToMenuBtn" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_ndyib")
+text = "Back to menu"
+icon = ExtResource("2_sirvs")
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackToMenuBtn" to="." method="_on_back_to_menu_btn_pressed"]
