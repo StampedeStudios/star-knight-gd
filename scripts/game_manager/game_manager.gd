@@ -9,9 +9,9 @@ extends Node
 ## Handles all UI signals/events triggered from [code]User Interface[/code].
 ##
 ## Handles all UI events which require game logic centrilized in the [code]Game Manager[/code] such as:[br]- Load Level;[br]- Save Level;[br]- Pause Game.
-func _on_user_interface_event_initiated(event: Enums.UIEvent):
+func _on_user_interface_event_initiated(event: Enums.GameEvent):
     match event:
-        Enums.UIEvent.GAME_STARTED:
+        Enums.GameEvent.GAME_STARTED:
             var level = load("res://levels/Level1.tscn")
             
             if not level:
