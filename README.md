@@ -22,12 +22,12 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
   - [ ] Wave spawning;
 - [ ] Game manager:
   - [ ] Victory & Death;
-  - [ ] UI update;
+  - [x] UI update;
 - [ ] Sound Manager:
   - [ ] Soundtrack;
   - [ ] Sound Effects;
 - [ ] UI:
-  - [ ] Main menu;
+  - [x] Main menu;
   - [ ] HUD;
 
 

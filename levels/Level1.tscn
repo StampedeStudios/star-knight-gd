@@ -1,7 +1,20 @@
 [gd_scene load_steps=2 format=3 uid="uid://d3o5f2fpj8rru"]
 
-[ext_resource type="PackedScene" uid="uid://rno3jbxogp8r" path="res://scenes/user_interface/Menu.tscn" id="1_i760j"]
+[sub_resource type="GDScript" id="GDScript_3xum5"]
 
 [node name="Level1" type="Node2D"]
+script = SubResource("GDScript_3xum5")
 
-[node name="menu" parent="." instance=ExtResource("1_i760j")]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "LEVEL 1"
