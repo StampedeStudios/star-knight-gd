@@ -42,6 +42,6 @@ func _pop_menu():
     how_to_play_section.hide()
     menu.show()
 
-func _hide_all():
+func hide_all():
     menu.hide()
     how_to_play_section.hide()
