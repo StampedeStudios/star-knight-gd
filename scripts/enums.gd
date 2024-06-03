@@ -9,8 +9,8 @@ enum MenuEvent {
 }
 
 ## All UI events triggered which require to be handled by [code]Game Manager[/code].
-enum UIEvent {
-    GAME_STARTED,
-    GAME_PAUSED,
-    GAME_QUIT,
+enum GameEvent {
+    STARTED,
+    PAUSED,
+    QUIT,
 }
