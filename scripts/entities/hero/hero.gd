@@ -5,12 +5,18 @@ extends Node2D
 @export var accel: float = 3000
 @export var friction: float = 1500
 
-var input = Vector2.ZERO
+signal shoot(bullet, direction, location)
+var Bullet: PackedScene = preload ("res://scenes/entities/Bullet.tscn")
+
+var input: Vector2 = Vector2.ZERO
+
+func _process(_delta):
+	if (Input.is_action_pressed("shoot")):
+		shoot.emit(Bullet, entity.rotation, entity.position)
 
 func _physics_process(delta):
 	player_movement(delta)
 
-# TODO: Refactor INPUT logic
 func get_input():
 	input.x = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	input.y = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
@@ -18,7 +24,6 @@ func get_input():
 
 func player_movement(delta):
 	input = get_input()
-	
 	if (input == Vector2.ZERO):
 		if (entity.velocity.length() > (friction * delta)):
 			entity.velocity -= entity.velocity.normalized() * (friction * delta)
