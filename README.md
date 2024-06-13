@@ -33,7 +33,7 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
 
 ## License
 
-This project is developed under [MIT License](LICENSE.txt).
+This project is developed under [MIT License](LICENSE).
 
 ### Attribution
 
