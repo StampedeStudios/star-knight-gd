@@ -18,9 +18,19 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 
 project/assembly_name="Star Knight"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
 [filesystem]
 
 import/blender/enabled=false
+
+[gdunit4]
+
+settings/test/test_lookup_folder="tests"
+settings/test/test_discovery=true
+report/godot/push_error=true
 
 [gui]
 
