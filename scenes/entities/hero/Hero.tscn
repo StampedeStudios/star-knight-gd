@@ -49,10 +49,15 @@ animations = [{
 
 [node name="hero" type="Node2D"]
 script = ExtResource("1_dvsan")
+max_speed = null
+accel = null
+friction = null
+rate_of_fire = null
 
 [node name="Entity" parent="." instance=ExtResource("2_4ca05")]
 
 [node name="AnimatedSprite2D" parent="Entity" index="1"]
+z_index = 10
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_hws7e")
