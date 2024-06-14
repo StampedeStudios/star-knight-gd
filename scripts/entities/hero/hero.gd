@@ -4,22 +4,32 @@ extends Node2D
 @export var max_speed: float = 400
 @export var accel: float = 3000
 @export var friction: float = 1500
+@export var rate_of_fire: float = 10
 
-signal shoot(bullet, direction, location)
-var Bullet: PackedScene = preload ("res://scenes/entities/Bullet.tscn")
-
+const Bullet: PackedScene = preload ("res://scenes/entities/Bullet.tscn")
 var input: Vector2 = Vector2.ZERO
+var can_shoot: bool = true;
+
+var timer: Timer = Timer.new()
+signal shoot(bullet, direction, location)
+
+func _ready():
+	add_child(timer)
+	timer.connect(Literals.Signals.TIMEOUT, func(): can_shoot=true)
 
 func _process(_delta):
-	if (Input.is_action_pressed("shoot")):
-		shoot.emit(Bullet, entity.rotation, entity.position)
+	if (can_shoot):
+		if (Input.is_action_pressed(Literals.Inputs.SHOOT)):
+			shoot.emit(Bullet, entity.rotation, entity.position)
+			can_shoot = false
+			timer.start(1 / rate_of_fire)
 
 func _physics_process(delta):
 	player_movement(delta)
 
 func get_input():
-	input.x = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
-	input.y = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
+	input.x = int(Input.is_action_pressed(Literals.Inputs.MOVE_RIGHT)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_LEFT))
+	input.y = int(Input.is_action_pressed(Literals.Inputs.MOVE_DOWN)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_UP))
 	return input.normalized()
 
 func player_movement(delta):
