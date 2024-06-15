@@ -1,9 +1,7 @@
-extends Node2D
+extends CharacterBody2D
 ## Script that handles the logic of the player described as `Hero`.
 ##
 ## Movement, shooting and health of player are handled by this script.
-
-@onready var entity = $Entity
 
 ## Maximum speed that should be reachable by the hero.
 @export_range(40, 1000) var max_speed: float = 400
@@ -28,9 +26,9 @@ signal shoot(bullet, direction, location)
 signal quit()
 
 func _ready():
-    timer = Timer.new()
-    add_child(timer)
-    timer.connect(Literals.Signals.TIMEOUT, func(): can_shoot=true)
+	timer = Timer.new()
+	add_child(timer)
+	timer.connect(Literals.Signals.TIMEOUT, func(): can_shoot=true)
 
 func _process(_delta):
     if (can_shoot):
@@ -42,23 +40,23 @@ func _process(_delta):
         quit.emit()
 
 func _physics_process(delta):
-    player_movement(delta)
+	player_movement(delta)
 
 ## Handles normalization of player input.
 func get_input():
-    input.x = int(Input.is_action_pressed(Literals.Inputs.MOVE_RIGHT)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_LEFT))
-    input.y = int(Input.is_action_pressed(Literals.Inputs.MOVE_DOWN)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_UP))
-    return input.normalized()
+	input.x = int(Input.is_action_pressed(Literals.Inputs.MOVE_RIGHT)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_LEFT))
+	input.y = int(Input.is_action_pressed(Literals.Inputs.MOVE_DOWN)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_UP))
+	return input.normalized()
 
 ## Handles player movement.
 func player_movement(delta):
-    input = get_input()
-    if (input == Vector2.ZERO):
-        if (entity.velocity.length() > (friction * delta)):
-            entity.velocity -= entity.velocity.normalized() * (friction * delta)
-        else:
-            entity.velocity = Vector2.ZERO;
-    else:
-        entity.velocity += (input * accel * delta)
-        entity.velocity = entity.velocity.limit_length(max_speed)
-    entity.move_and_slide()
+	input = get_input()
+	if (input == Vector2.ZERO):
+		if (velocity.length() > (friction * delta)):
+			velocity -= velocity.normalized() * (friction * delta)
+		else:
+			velocity = Vector2.ZERO
+	else:
+		velocity += (input * accel * delta)
+		velocity = velocity.limit_length(max_speed)
+	move_and_slide()
