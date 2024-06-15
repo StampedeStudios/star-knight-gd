@@ -6,9 +6,12 @@ extends Node
 
 ## Number of AudioStreamPlayer that will be created as starting pool to execute Sound effects.
 @export_range(1, 20) var sfx_pool_size: int = 3
+## Range of values to randomize pitch of every played sfx.
+@export var pitch_range := [1.0, 1.0]
 
 ## Pool of SFX Audio Stream Players.
 var sfx_players := []
+var rng = RandomNumberGenerator.new()
 
 ## Handle startup events:[br]- Initialization of SFX players pool;
 func _ready():
@@ -22,6 +25,7 @@ func _ready():
 func play_sound_effect(clip: AudioStream):
     var player: AudioStreamPlayer = _get_available_sfx_player()
     player.set_stream(clip)
+    player.pitch_scale = rng.randf_range(pitch_range[0], pitch_range[1])
     player.play()
 
 ## Provide a free SFX player

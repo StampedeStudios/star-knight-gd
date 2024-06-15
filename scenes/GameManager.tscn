@@ -10,5 +10,6 @@ script = ExtResource("1_gp4mn")
 [node name="UserInterface" parent="." instance=ExtResource("2_l7ke8")]
 
 [node name="SoundManager" parent="." instance=ExtResource("3_ftysc")]
+pitch_range = [0.8, 1.2]
 
 [connection signal="event_initiated" from="UserInterface" to="." method="_on_user_interface_event_initiated"]

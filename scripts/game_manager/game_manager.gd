@@ -31,7 +31,6 @@ func _on_user_interface_event_initiated(event: Enums.GameEvent):
             pass
 
 ## Handles the bullet spawning process when [code]hero[/code] is shooting.
-## 
 func _on_hero_shoot(bullet: PackedScene, direction: float, position: Vector2, audio_clip: AudioStream):
     var spawned_bullet = bullet.instantiate()
     add_child(spawned_bullet)
