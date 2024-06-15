@@ -7,7 +7,7 @@ func test_ui_construction() -> void:
     add_child(gm_instance)
     assert_object(gm_instance).is_not_null()
 
-    const expected_num_children: int = 1
+    const expected_num_children: int = 2
     assert_int(gm_instance.get_child_count()).is_equal(expected_num_children)
 
     var ui_instance: Control = gm_instance.get_child(0) as Control
