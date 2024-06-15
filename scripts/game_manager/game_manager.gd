@@ -18,6 +18,8 @@ func _on_user_interface_event_initiated(event: Enums.GameEvent):
             var level = load("res://levels/Level1.tscn")
             var hero = load("res://scenes/entities/hero/Hero.tscn")
             var hero_instance = hero.instantiate()
+            #TODO Delete magic numbers
+            hero_instance.position = Vector2(410, 1000)
             hero_instance.connect('shoot', _on_hero_shoot)
             hero_instance.connect('quit', _on_quit_request)
 

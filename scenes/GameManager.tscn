@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/game_manager/game_manager.gd" id="1_gp4mn"]
 [ext_resource type="PackedScene" uid="uid://ct54s10ac24la" path="res://scenes/user_interface/UserInterface.tscn" id="2_l7ke8"]
-[ext_resource type="PackedScene" uid="uid://cuw4b5gs7bbf2" path="res://scenes/SoundManager.tscn" id="3_ftysc"]
+[ext_resource type="PackedScene" uid="uid://deg6b3f4p5ald" path="res://scenes/SoundManager.tscn" id="3_ftysc"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_gp4mn")

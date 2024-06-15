@@ -37,6 +37,7 @@ import/blender/enabled=false
 settings/test/test_lookup_folder="tests"
 settings/test/test_discovery=true
 report/godot/push_error=true
+ui/toolbar/run_overall=true
 
 [gui]
 
