@@ -42,6 +42,7 @@ func _pop_menu():
     how_to_play_section.hide()
     menu.show()
 
+## Hides all UI elements.
 func hide_all():
     menu.hide()
     how_to_play_section.hide()
