@@ -49,10 +49,6 @@ animations = [{
 
 [node name="hero" type="Node2D"]
 script = ExtResource("1_dvsan")
-max_speed = null
-accel = null
-friction = null
-rate_of_fire = null
 
 [node name="Entity" parent="." instance=ExtResource("2_4ca05")]
 
