@@ -29,7 +29,7 @@ func test_ui_panel_handling() -> void:
     assert_object(how_to_play_section).is_not_null()
 
     # Popping Menu should hide other sections
-    ui_instance._pop_menu()
+    ui_instance.pop_menu()
     assert_bool(menu.visible).is_true()
     assert_bool(how_to_play_section.visible).is_false()
 
