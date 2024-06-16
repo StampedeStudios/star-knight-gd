@@ -6,8 +6,6 @@ extends Node
 
 ## Number of AudioStreamPlayer that will be created as starting pool to execute Sound effects.
 @export_range(1, 20) var sfx_pool_size: int = 3
-## Range of values to randomize pitch of every played sfx.
-@export var pitch_range := [1.0, 1.0]
 
 ## Pool of SFX Audio Stream Players.
 var sfx_players := []
@@ -21,11 +19,17 @@ func _ready():
         add_child(sfx_player)
         sfx_players.append(sfx_player)
 
+## Function that consent a sound effect to be played whenever required applying a random pitch scale.
+func play_sound_effect_random_pitch(clip: AudioStream):
+    var player: AudioStreamPlayer = _get_available_sfx_player()
+    player.set_stream(clip)
+    player.pitch_scale = rng.randf_range(0.8, 1.2)
+    player.play()
+
 ## Function that consent a sound effect to be played whenever required.
 func play_sound_effect(clip: AudioStream):
     var player: AudioStreamPlayer = _get_available_sfx_player()
     player.set_stream(clip)
-    player.pitch_scale = rng.randf_range(pitch_range[0], pitch_range[1])
     player.play()
 
 ## Provide a free SFX player
@@ -36,7 +40,7 @@ func _get_available_sfx_player() -> AudioStreamPlayer:
         if not player.playing:
             return player
 
-    push_warning("All AudioStreamPlayer are busy, adding a new one to the pool: {%s}" % [sfx_players.size()])
+    push_warning("All AudioStreamPlayer are busy, adding a new one to the pool: {%s}" % sfx_players.size())
     var new_player = AudioStreamPlayer.new()
     add_child(new_player)
     sfx_players.append(new_player)

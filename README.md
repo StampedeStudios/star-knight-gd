@@ -23,9 +23,9 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
 - [ ] Game manager:
   - [ ] Victory & Death;
   - [x] UI update;
-- [ ] Sound Manager:
+- [x] Sound Manager:
   - [ ] Soundtrack;
-  - [ ] Sound Effects;
+  - [x] Sound Effects;
 - [ ] UI:
   - [x] Main menu;
   - [ ] HUD;

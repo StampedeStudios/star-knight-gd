@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://rno3jbxogp8r"]
+[gd_scene load_steps=14 format=3 uid="uid://rno3jbxogp8r"]
 
 [ext_resource type="Script" path="res://scripts/user_inteface/menu.gd" id="1_0vuea"]
-[ext_resource type="Theme" uid="uid://ba4822upgnunc" path="res://assets/user_interface/Theme.tres" id="1_ntu2w"]
 [ext_resource type="Texture2D" uid="uid://bvhe4dwmndnov" path="res://assets/user_interface/shortcuts/g.png" id="2_b1p3a"]
+[ext_resource type="Theme" uid="uid://ba4822upgnunc" path="res://scenes/user_interface/styles/Theme.tres" id="2_pt70g"]
+[ext_resource type="StyleBox" uid="uid://bur4dfn7n34ly" path="res://scenes/user_interface/styles/MainBtnNormal.tres" id="3_21ldx"]
 [ext_resource type="Texture2D" uid="uid://cfp3xnrkytyp5" path="res://assets/user_interface/shortcuts/h.png" id="3_754d3"]
+[ext_resource type="StyleBox" uid="uid://cg3rpdlmdgouf" path="res://scenes/user_interface/styles/MainBtnPressed.tres" id="4_ksn6u"]
+[ext_resource type="Texture2D" uid="uid://dqdh0ggwjbqqb" path="res://assets/user_interface/shortcuts/q.png" id="5_q05ty"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_jvx4s"]
 keycode = 71
@@ -19,6 +22,14 @@ unicode = 72
 [sub_resource type="Shortcut" id="Shortcut_rhfhm"]
 events = [SubResource("InputEventKey_do0j6")]
 
+[sub_resource type="InputEventKey" id="InputEventKey_c4bca"]
+device = -1
+keycode = 81
+unicode = 81
+
+[sub_resource type="Shortcut" id="Shortcut_1oi37"]
+events = [SubResource("InputEventKey_c4bca")]
+
 [node name="Menu" type="CanvasLayer"]
 script = ExtResource("1_0vuea")
 
@@ -28,16 +39,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -10.0
-offset_right = 4.0
-offset_bottom = 10.0
+offset_left = -145.0
+offset_top = -137.0
+offset_right = 145.0
+offset_bottom = 137.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="StartBtn" type="Button" parent="BtnContainer"]
 layout_mode = 2
-theme = ExtResource("1_ntu2w")
+theme = ExtResource("2_pt70g")
+theme_override_styles/normal = ExtResource("3_21ldx")
+theme_override_styles/hover = ExtResource("3_21ldx")
+theme_override_styles/pressed = ExtResource("4_ksn6u")
 shortcut = SubResource("Shortcut_tj87o")
 shortcut_in_tooltip = false
 text = "START "
@@ -45,11 +59,23 @@ icon = ExtResource("2_b1p3a")
 
 [node name="HowToPlayBtn" type="Button" parent="BtnContainer"]
 layout_mode = 2
-theme = ExtResource("1_ntu2w")
+theme = ExtResource("2_pt70g")
 shortcut = SubResource("Shortcut_rhfhm")
 shortcut_in_tooltip = false
 text = "HOW TO PLAY "
 icon = ExtResource("3_754d3")
 
+[node name="HSeparator" type="HSeparator" parent="BtnContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="QuitBtn" type="Button" parent="BtnContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_1oi37")
+text = "QUIT"
+icon = ExtResource("5_q05ty")
+
 [connection signal="pressed" from="BtnContainer/StartBtn" to="." method="_on_start_btn_pressed"]
 [connection signal="pressed" from="BtnContainer/HowToPlayBtn" to="." method="_on_how_to_play_btn_pressed"]
+[connection signal="pressed" from="BtnContainer/QuitBtn" to="." method="_on_quit_btn_pressed"]

@@ -1,14 +1,52 @@
-[gd_scene load_steps=5 format=3 uid="uid://ead0ewemcswu"]
+[gd_scene load_steps=11 format=3 uid="uid://ead0ewemcswu"]
 
 [ext_resource type="Script" path="res://scripts/user_inteface/how_to_play_section.gd" id="1_gl0v8"]
+[ext_resource type="Texture2D" uid="uid://btyygwanjdwwa" path="res://assets/sprites/hero/hero.png" id="2_bi3yn"]
 [ext_resource type="Texture2D" uid="uid://bvhe4dwmndnov" path="res://assets/user_interface/shortcuts/g.png" id="2_sirvs"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_rnumx"]
-keycode = 71
-unicode = 71
+[sub_resource type="AtlasTexture" id="AtlasTexture_wru1x"]
+atlas = ExtResource("2_bi3yn")
+region = Rect2(0, 0, 256, 256)
 
-[sub_resource type="Shortcut" id="Shortcut_ndyib"]
-events = [SubResource("InputEventKey_rnumx")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qo5ew"]
+atlas = ExtResource("2_bi3yn")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yc2c5"]
+atlas = ExtResource("2_bi3yn")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0pa7"]
+atlas = ExtResource("2_bi3yn")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v20o2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wru1x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qo5ew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yc2c5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0pa7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ap70t"]
+device = -1
+keycode = 71
+unicode = 103
+
+[sub_resource type="Shortcut" id="Shortcut_s4fe4"]
+events = [SubResource("InputEventKey_ap70t")]
 
 [node name="HowToPlaySection" type="CanvasLayer"]
 offset = Vector2(0.5, 0.5)
@@ -21,36 +59,94 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_bottom = 128
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="HowToPlayTxt" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ScrollContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "How to play"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label3" type="Label" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Movements"
+
+[node name="FirstSection" type="HBoxContainer" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2/FirstSection"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
 bbcode_enabled = true
-text = "[b]# How to play Star Knight[/b]
+text = "[img]res://assets/user_interface/icons/keys/dot.png[/img]Use[img]res://assets/user_interface/icons/keys/up_key.png[/img][img]res://assets/user_interface/icons/keys/right_key.png[/img][img]res://assets/user_interface/icons/keys/left_key.png[/img][img]res://assets/user_interface/icons/keys/right_key.png[/img]to move;
+[img]res://assets/user_interface/icons/keys/dot.png[/img]Use[img]res://assets/user_interface/icons/keys/spacebar_key.png[/img]to shoot;
+[img]res://assets/user_interface/icons/keys/dot.png[/img]Use[img]res://assets/user_interface/icons/keys/r_key.png[/img]to reload."
+fit_content = true
 
-[b]## Movement[/b]
-- User arrow keys to move;
-- Use <spacebar> to shoot;
-- Use <R> to reload.
-
-[b]## Goal[/b]
-- Don't die;
-- Kill as much enemies you are able to;
-- Pick up power-ups and ammo packs along the way."
-
-[node name="BackToMenuBtn" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2/FirstSection"]
+custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-shortcut = SubResource("Shortcut_ndyib")
-text = "Back to menu"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2/FirstSection/Control"]
+sprite_frames = SubResource("SpriteFrames_v20o2")
+autoplay = "default"
+centered = false
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer2"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/ScrollContainer/HFlowContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Goal"
+
+[node name="SecondSection" type="HBoxContainer" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3/SecondSection"]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+bbcode_enabled = true
+text = "[img]res://assets/user_interface/icons/keys/dot.png[/img]Watch your shields and survive;
+[img]res://assets/user_interface/icons/keys/dot.png[/img]Kill as many enemies you are able to;
+[img]res://assets/user_interface/icons/keys/dot.png[/img]Pick up power-ups and ammo packs along the way."
+fit_content = true
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="back_to_meno_btn" type="Button" parent="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_s4fe4")
+text = "Back to the menu"
 icon = ExtResource("2_sirvs")
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/BackToMenuBtn" to="." method="_on_back_to_menu_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3/back_to_meno_btn" to="." method="_on_back_to_meno_btn_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3/back_to_meno_btn" to="." method="_on_button_pressed"]

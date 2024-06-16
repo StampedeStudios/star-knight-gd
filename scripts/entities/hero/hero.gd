@@ -25,6 +25,7 @@ var timer: Timer
 
 ## Shooting action to be handled by the Game Manager.
 signal shoot(bullet, direction, location)
+signal quit()
 
 func _ready():
     timer = Timer.new()
@@ -37,6 +38,8 @@ func _process(_delta):
             shoot.emit(BULLET, entity.rotation, entity.position, HERO_SHOOT_SFX)
             can_shoot = false
             timer.start(1 / rate_of_fire)
+    if (Input.is_action_pressed('quit')):
+        quit.emit()
 
 func _physics_process(delta):
     player_movement(delta)
