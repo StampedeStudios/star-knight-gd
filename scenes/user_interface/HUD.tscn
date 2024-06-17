@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxvd4yprk0crc"]
+
+[ext_resource type="Script" path="res://scripts/user_inteface/hud.gd" id="1_nwars"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_nwars")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 137.91)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Health" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/Health"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+value = 36.34
+show_percentage = false
+
+[node name="Ammunition" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="AmmoCount" type="Label" parent="MarginContainer/HBoxContainer/Ammunition"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(6.31, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "20/20"

@@ -7,6 +7,8 @@ extends Control
 @onready var menu: CanvasLayer = $Menu
 ## HTP Section Canvas Layer
 @onready var how_to_play_section: CanvasLayer = $HowToPlaySection
+## Heads up display
+@onready var hud: CanvasLayer = $HUD
 
 const BTN_SFX = preload ("res://assets/audio/button.wav")
 const CHANGE_UI_SFX = preload ("res://assets/audio/change_ui_sfx.wav")
@@ -18,6 +20,7 @@ signal sound_played(audio_clip: AudioStream)
 
 func _ready():
     how_to_play_section.hide()
+    hud.hide()
 
 ## Handles all [param event] coming from Menu Canvas Leyer.
 func _on_menu_control_triggered(event: Enums.MenuEvent):
@@ -59,3 +62,9 @@ func pop_menu():
 func hide_all():
     menu.hide()
     how_to_play_section.hide()
+
+func update_hud(ammunition: int, magazine_size: int):
+    hud.update_ammo_count(ammunition, magazine_size)
+
+func show_hud():
+    hud.show()
