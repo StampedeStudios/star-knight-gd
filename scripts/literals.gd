@@ -8,6 +8,7 @@ class Inputs:
     const MOVE_RIGHT := "move_right"
     const MOVE_LEFT := "move_left"
     const SHOOT := 'shoot'
+    const RELOAD := 'reload'
 
 ## Literals associated with the signals.
 class Signals:
