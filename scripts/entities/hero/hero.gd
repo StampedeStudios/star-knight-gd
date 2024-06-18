@@ -28,61 +28,60 @@ var ammunition: int = magazine_size
 var is_reloading: bool = false
 
 ## Shooting action to be handled by the Game Manager.
-signal shoot(bullet: PackedScene, direction: float, location: float)
+signal shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream)
 signal ammunition_change(ammunition: int, magazine_size: int)
 signal quit()
 
 func _ready():
-	timer = Timer.new()
-	add_child(timer)
-	timer.connect(Literals.Signals.TIMEOUT, func(): can_shoot=true)
+    timer = Timer.new()
+    add_child(timer)
+    timer.connect(Literals.Signals.TIMEOUT, func(): can_shoot=true)
 
 func _process(_delta):
-	if (can_shoot and ammunition != 0):
-		if (Input.is_action_pressed(Literals.Inputs.SHOOT)):
-			_shoot()
+    if (can_shoot and ammunition != 0 and !is_reloading):
+        if (Input.is_action_pressed(Literals.Inputs.SHOOT)):
+            _shoot()
 
 func _physics_process(delta):
-	player_movement(delta)
+    player_movement(delta)
 
 func _unhandled_key_input(event):
-	if event is InputEventKey:
-		if (event.is_action_pressed(Literals.Inputs.RELOAD) and !is_reloading):
-			_reload()
-		elif (event.is_action_pressed(Literals.Inputs.QUIT)):
-			quit.emit()
-
+    if event is InputEventKey:
+        if (event.is_action_pressed(Literals.Inputs.RELOAD) and !is_reloading):
+            _reload()
+        elif (event.is_action_pressed(Literals.Inputs.QUIT)):
+            quit.emit()
 
 ## Handles player movement.
 func player_movement(delta):
-	input = _get_input()
-	if (input == Vector2.ZERO):
-		if (velocity.length() > (friction * delta)):
-			velocity -= velocity.normalized() * (friction * delta)
-		else:
-			velocity = Vector2.ZERO
-	else:
-		velocity += (input * accel * delta)
-		velocity = velocity.limit_length(max_speed)
-	move_and_slide()
+    input = _get_input()
+    if (input == Vector2.ZERO):
+        if (velocity.length() > (friction * delta)):
+            velocity -= velocity.normalized() * (friction * delta)
+        else:
+            velocity = Vector2.ZERO
+    else:
+        velocity += (input * accel * delta)
+        velocity = velocity.limit_length(max_speed)
+    move_and_slide()
 
 func _shoot():
-	shoot.emit(BULLET, rotation, position, HERO_SHOOT_SFX)
-	ammunition = ammunition - 1
-	ammunition_change.emit(ammunition, magazine_size)
-	can_shoot = false
-	if (ammunition != 0):
-		timer.start(1 / rate_of_fire)
+    shoot.emit(BULLET, rotation, position, HERO_SHOOT_SFX)
+    ammunition = ammunition - 1
+    ammunition_change.emit(ammunition, magazine_size)
+    can_shoot = false
+    if (ammunition != 0):
+        timer.start(1 / rate_of_fire)
 
 func _reload():
-	is_reloading = true
-	await get_tree().create_timer(1.0).timeout
-	ammunition = magazine_size
-	ammunition_change.emit(ammunition, magazine_size)
-	is_reloading = false
+    is_reloading = true
+    await get_tree().create_timer(1.0).timeout
+    ammunition = magazine_size
+    ammunition_change.emit(ammunition, magazine_size)
+    is_reloading = false
 
 ## Handles normalization of player input.
 func _get_input():
-	input.x = int(Input.is_action_pressed(Literals.Inputs.MOVE_RIGHT)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_LEFT))
-	input.y = int(Input.is_action_pressed(Literals.Inputs.MOVE_DOWN)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_UP))
-	return input.normalized()
+    input.x = int(Input.is_action_pressed(Literals.Inputs.MOVE_RIGHT)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_LEFT))
+    input.y = int(Input.is_action_pressed(Literals.Inputs.MOVE_DOWN)) - int(Input.is_action_pressed(Literals.Inputs.MOVE_UP))
+    return input.normalized()

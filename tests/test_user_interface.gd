@@ -7,7 +7,7 @@ func test_ui_construction() -> void:
     add_child(gm_instance)
     assert_object(gm_instance).is_not_null()
 
-    const expected_num_children: int = 2
+    const expected_num_children: int = 3
     assert_int(gm_instance.get_child_count()).is_equal(expected_num_children)
 
     var ui_instance: Control = gm_instance.get_child(0) as Control
@@ -20,7 +20,7 @@ func test_ui_panel_handling() -> void:
     var ui_instance: Control = gm_instance.get_child(0) as Control
     assert_object(ui_instance).is_not_null()
     var num_ui_children: int = ui_instance.get_child_count()
-    assert_int(num_ui_children).is_equal(2)
+    assert_int(num_ui_children).is_equal(3)
 
     var menu: CanvasLayer = ui_instance.get_child(0)
     assert_object(menu).is_not_null()

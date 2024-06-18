@@ -55,12 +55,15 @@ func _pop_how_to_play():
 ## Hides all menu elements but [code]Menu[/code].
 func pop_menu():
     how_to_play_section.hide()
+    hud.hide()
+
     sound_played.emit(CHANGE_UI_SFX)
     menu.show()
 
 ## Hides all UI elements.
 func hide_all():
     menu.hide()
+    hud.hide()
     how_to_play_section.hide()
 
 func update_hud(ammunition: int, magazine_size: int):
