@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcw04rs4hxoe5"]
+[gd_scene load_steps=5 format=3 uid="uid://dcw04rs4hxoe5"]
 
 [ext_resource type="Script" path="res://scripts/game_manager/game_manager.gd" id="1_gp4mn"]
 [ext_resource type="PackedScene" uid="uid://ct54s10ac24la" path="res://scenes/user_interface/UserInterface.tscn" id="2_l7ke8"]
 [ext_resource type="PackedScene" uid="uid://deg6b3f4p5ald" path="res://scenes/SoundManager.tscn" id="3_ftysc"]
+[ext_resource type="PackedScene" uid="uid://bnw4fnxupvs5l" path="res://scenes/SceneManager.tscn" id="4_xaonq"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_gp4mn")
@@ -11,5 +12,10 @@ script = ExtResource("1_gp4mn")
 
 [node name="SoundManager" parent="." instance=ExtResource("3_ftysc")]
 
+[node name="SceneManager" parent="." instance=ExtResource("4_xaonq")]
+
 [connection signal="event_initiated" from="UserInterface" to="." method="_on_user_interface_event_initiated"]
 [connection signal="sound_played" from="UserInterface" to="." method="_on_user_interface_sound_played"]
+[connection signal="hero_ammo_change" from="SceneManager" to="." method="_on_scene_manager_hero_ammo_change"]
+[connection signal="quit" from="SceneManager" to="." method="_on_scene_manager_quit"]
+[connection signal="sound_played" from="SceneManager" to="." method="_on_scene_manager_sound_played"]
