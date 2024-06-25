@@ -14,4 +14,7 @@ class Inputs:
 ## Literals associated with the signals.
 class Signals:
     const SHOOT := 'shoot'
+    const AMMO_CHANGE := 'ammunition_change'
+    const ENEMIES_DEFEATED := 'enemies_defetead'
     const TIMEOUT := 'timeout'
+    const QUIT_REQUEST := 'quit'
