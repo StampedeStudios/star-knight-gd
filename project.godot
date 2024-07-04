@@ -24,10 +24,6 @@ window/size/viewport_height=1440
 
 project/assembly_name="Star Knight"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
-
 [filesystem]
 
 import/blender/enabled=false
