@@ -16,6 +16,5 @@ script = ExtResource("1_gp4mn")
 
 [connection signal="event_initiated" from="UserInterface" to="." method="_on_user_interface_event_initiated"]
 [connection signal="sound_played" from="UserInterface" to="." method="_on_user_interface_sound_played"]
-[connection signal="hero_ammo_change" from="SceneManager" to="." method="_on_scene_manager_hero_ammo_change"]
 [connection signal="quit" from="SceneManager" to="." method="_on_scene_manager_quit"]
 [connection signal="sound_played" from="SceneManager" to="." method="_on_scene_manager_sound_played"]

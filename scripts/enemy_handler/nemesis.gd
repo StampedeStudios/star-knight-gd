@@ -13,40 +13,40 @@ var waves: Array
 signal enemies_defetead
 
 func reset_stats(l_name: String, wave_info: Array):
-    level_name = l_name
-    waves = wave_info
-    _start_wave(0)
+	level_name = l_name
+	waves = wave_info
+	_start_wave(0)
 
 ## Setup wave to start spawning enemies.
 func _start_wave(index: int):
-    if waves.size() == 0:
-        push_warning("No waves found in %s" % level_name)
-        pass
+	if waves.size() == 0:
+		push_warning("No waves found in %s" % level_name)
+		pass
 
-    var delay: int = 10
-    await get_tree().create_timer(delay).timeout
-    print("[Nemesis] Wave %s started" % [index + 1])
+	var delay: int = 10
+	await get_tree().create_timer(delay).timeout
+	print("[Nemesis] Wave %s started" % [index + 1])
 
-    var num_enemies: int = waves[index]
-    await _spawn_enemies(num_enemies)
+	var num_enemies: int = waves[index]
+	await _spawn_enemies(num_enemies)
 
-    if index + 1 >= waves.size():
-        print("[Nemesis] All enemies in %s spawned" % [level_name])
-    else:
-        print("[Nemesis] Wave [%s/%s] surpassed" % [index + 1, waves.size()])
-        _start_wave(index + 1)
+	if index + 1 >= waves.size():
+		print("[Nemesis] All enemies in %s spawned" % [level_name])
+	else:
+		print("[Nemesis] Wave [%s/%s] surpassed" % [index + 1, waves.size()])
+		_start_wave(index + 1)
 
 ## Handles the spawn of enemies.
 func _spawn_enemies(num_enemies: int):
-    for index in range(0, num_enemies):
-        var random_waiting_time: int = randi_range(1, 5)
-        await get_tree().create_timer(random_waiting_time).timeout
-        # TODO: Spawn enemy
-        # enemy.connect('death', _on_enemy_death())
-    pass
+	for index in range(0, num_enemies):
+		var random_waiting_time: int = randi_range(1, 5)
+		await get_tree().create_timer(random_waiting_time).timeout
+		# TODO: Spawn enemy
+		# enemy.connect('death', _on_enemy_death())
+	pass
 
 func _on_enemy_death():
-    enemies_left = enemies_left - 1
+	enemies_left = enemies_left - 1
 
-    if enemies_left == 0:
-        enemies_defetead.emit()
+	if enemies_left == 0:
+		enemies_defetead.emit()
