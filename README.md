@@ -10,12 +10,14 @@ All sprites are made in pixel-art using [Asperite](https://www.aseprite.org/). C
 All sound effects are made in-house and edited with [Audacity](https://www.audacityteam.org/).
 
 ## Roadmap
+
+### Basic
 - [ ] Hero/Enemies:
   - [ ] Health handler:
-  - [ ] Movement;
-  - [ ] Shooting;
-- [ ] Enemy handler:
-  - [ ] Wave spawning;
+  - [x] Movement;
+  - [x] Shooting;
+- [x] Enemy handler:
+  - [x] Wave spawning;
 - [ ] Game manager:
   - [ ] Victory & Death;
   - [x] UI update;
@@ -24,8 +26,21 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
   - [x] Sound Effects;
 - [ ] UI:
   - [x] Main menu;
-  - [ ] HUD;
+  - [x] HUD;
 
+### Gameplay
+- [ ] Pickupables
+  - [ ] Instant perks
+    - [ ] Health packs
+  - [ ] Timed perks
+    - [ ] Gun upgrade
+
+### Levels improvments
+- [ ] Environment
+  - [ ] Deep space
+  - [ ] Roaming planets
+  - [ ] Debris
+  - [ ] Asteroid belts
 
 ## License
 This project is developed under [MIT License](LICENSE).
