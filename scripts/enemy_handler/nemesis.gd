@@ -3,13 +3,14 @@ extends Node
 ##
 ## Every logic that involve enemy attacks will be handled here.
 
-# TODO: Preload enemy ship
-# const ENEMY_SHIP: PackedScene = preload ("res://scenes/entities/Enemy.tscn")
+const ENEMY_SHIP: PackedScene = preload ("res://scenes/entities/Enemy.tscn")
 
 var level_name: String
 var enemies_left: int
 var waves: Array
 
+# TODO delete
+var viewport: Vector2
 signal enemies_defetead
 
 func reset_stats(l_name: String, wave_info: Array):
@@ -38,12 +39,15 @@ func _start_wave(index: int):
 
 ## Handles the spawn of enemies.
 func _spawn_enemies(num_enemies: int):
-	for index in range(0, num_enemies):
+	# for index in range(0, num_enemies):
 		var random_waiting_time: int = randi_range(1, 5)
 		await get_tree().create_timer(random_waiting_time).timeout
-		# TODO: Spawn enemy
-		# enemy.connect('death', _on_enemy_death())
-	pass
+		var enemy = ENEMY_SHIP.instantiate()
+		viewport = get_viewport().size
+		enemy.position = Vector2(viewport.x / 2, viewport.x / 2)
+		enemy.connect(Literals.Signals.DEATH, _on_enemy_death)
+		add_child(enemy)
+	# pass
 
 func _on_enemy_death():
 	enemies_left = enemies_left - 1

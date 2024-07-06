@@ -18,3 +18,5 @@ class Signals:
     const ENEMIES_DEFEATED := 'enemies_defetead'
     const TIMEOUT := 'timeout'
     const QUIT_REQUEST := 'quit'
+    const DEATH := 'death'
+
