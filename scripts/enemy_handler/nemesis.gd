@@ -9,7 +9,6 @@ var level_name: String
 var enemies_left: int
 var waves: Array
 
-# TODO delete
 var viewport: Vector2
 signal enemies_defetead
 
@@ -24,7 +23,7 @@ func _start_wave(index: int):
 		push_warning("No waves found in %s" % level_name)
 		pass
 
-	var delay: int = 10
+	var delay: int = 3
 	await get_tree().create_timer(delay).timeout
 	print("[Nemesis] Wave %s started" % [index + 1])
 
@@ -39,15 +38,23 @@ func _start_wave(index: int):
 
 ## Handles the spawn of enemies.
 func _spawn_enemies(num_enemies: int):
-	# for index in range(0, num_enemies):
+	viewport = get_viewport().size
+	var enemies: int = 5
+	var interval_x: int = int(viewport.x / enemies)
+	var interval_y: int = 200
+	for index in range(0, num_enemies):
 		var random_waiting_time: int = randi_range(1, 5)
 		await get_tree().create_timer(random_waiting_time).timeout
 		var enemy = ENEMY_SHIP.instantiate()
-		viewport = get_viewport().size
-		enemy.position = Vector2(viewport.x / 2, viewport.x / 2)
+
+		var next_position_x: int = (index % (enemies - 1)) + 1
+		if (index == enemies - 1):
+			interval_y += 200
+		var x_position = next_position_x * interval_x
+		enemy.position = Vector2(x_position, interval_y)
 		enemy.connect(Literals.Signals.DEATH, _on_enemy_death)
 		add_child(enemy)
-	# pass
+	pass
 
 func _on_enemy_death():
 	enemies_left = enemies_left - 1

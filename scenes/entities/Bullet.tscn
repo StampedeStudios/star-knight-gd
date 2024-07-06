@@ -1,20 +1,21 @@
 [gd_scene load_steps=4 format=3 uid="uid://buap45ve521ia"]
 
-[ext_resource type="Script" path="res://scripts/entities/bullet.gd" id="1_f4s25"]
+[ext_resource type="Script" path="res://scripts/entities/bullet.gd" id="1_1bdwk"]
 [ext_resource type="Texture2D" uid="uid://ctiggokrrfb3p" path="res://assets/sprites/hero/hero_bullet.png" id="2_5gngv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_facrs"]
-radius = 4.0
-height = 20.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cm6s"]
+radius = 5.0
+height = 24.0
 
-[node name="Bullet" type="Area2D"]
-script = ExtResource("1_f4s25")
+[node name="Area2D" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_1bdwk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_5gngv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_facrs")
+shape = SubResource("CapsuleShape2D_7cm6s")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

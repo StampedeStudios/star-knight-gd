@@ -52,6 +52,7 @@ func load_next_level():
 
 		hero_instance.connect(Literals.Signals.SHOOT, _on_hero_shoot)
 		hero_instance.connect(Literals.Signals.QUIT_REQUEST, _on_quit_request)
+		hero_instance.connect(Literals.Signals.DEATH, _on_hero_death)
 
 	print("[Scene Manager] Loading level: %s" % reached_level)
 	var level = load(levels[reached_level])
@@ -98,6 +99,9 @@ func _on_enemies_defeated():
 	else:
 		load_next_level()
 
+func _on_hero_death():
+	# TODO Handle Game Over
+	print_debug('GAME OVER')
 
 func _finish_game():
 	nemesis_instance.queue_free()
