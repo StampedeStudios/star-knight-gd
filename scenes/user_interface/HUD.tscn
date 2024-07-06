@@ -27,6 +27,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/Health"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 50)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -44,4 +45,4 @@ custom_minimum_size = Vector2(6.31, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-text = "20/20"
+text = "10/10"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ds6ralnfcfqid"]
+[gd_scene load_steps=6 format=3 uid="uid://la7brnnj7r7w"]
 
 [ext_resource type="Script" path="res://scripts/entities/enemy.gd" id="1_5hfsb"]
 [ext_resource type="Texture2D" uid="uid://bg7h4iys6b36e" path="res://assets/sprites/enemies/enemy.png" id="1_orqhx"]
@@ -22,6 +22,7 @@ animations = [{
 }]
 
 [node name="Enemy" type="Area2D"]
+collision_mask = 513
 script = ExtResource("1_5hfsb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -31,3 +32,4 @@ shape = SubResource("CircleShape2D_qkc1g")
 sprite_frames = SubResource("SpriteFrames_04nk8")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
