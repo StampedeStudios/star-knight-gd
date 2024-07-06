@@ -15,6 +15,13 @@ run/main_scene="res://scenes/GameManager.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/fullsize=false
 
+[autoload]
+
+SoundManager="*res://scenes/SoundManager.tscn"
+SceneManager="*res://scenes/SceneManager.tscn"
+UserInterface="*res://scenes/user_interface/UserInterface.tscn"
+GameManager="*res://scenes/GameManager.tscn"
+
 [display]
 
 window/size/viewport_width=820
