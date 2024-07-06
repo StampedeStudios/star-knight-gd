@@ -5,6 +5,11 @@ extends Area2D
 
 ## Bullet velocity
 var velocity = Vector2.UP * 1000
+@export var damage = 20
 
 func _physics_process(delta):
-  position += velocity * delta
+	position += velocity * delta
+
+func _on_area_entered(area):
+	area.get_hurt(damage)
+	self.queue_free()

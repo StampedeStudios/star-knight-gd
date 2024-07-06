@@ -15,6 +15,8 @@ extends CharacterBody2D
 @export_range(20, 30) var magazine_size: int = 20
 ## Reload time in seconds
 @export_range(0.1, 2) var reload_time: float = 1.0
+## Health
+@export var max_health = 100
 ## Sound effect to be played whenever hero shoots.
 const HERO_SHOOT_SFX = preload("res://assets/audio/hero_shoot.wav")
 ## Default hero bullet type.
@@ -28,6 +30,7 @@ var timer: Timer
 var ammunition: int = magazine_size
 var is_reloading: bool = false
 
+var health: int = max_health
 ## Shooting action to be handled by the Game Manager.
 signal shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream)
 signal quit
