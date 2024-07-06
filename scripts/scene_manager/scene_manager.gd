@@ -18,7 +18,6 @@ const BOTTOM_POSITION_OFFSET: int = 150
 const LEVELS_FOLDER_PATH: String = "res://levels"
 var viewport_size: Vector2
 
-signal sound_played(audio_clip: AudioStream)
 signal quit
 
 
@@ -81,7 +80,7 @@ func _on_hero_shoot(
 	spawned_bullet.rotation = direction
 	spawned_bullet.position = location
 	spawned_bullet.velocity = spawned_bullet.velocity.rotated(direction)
-	sound_played.emit(audio_clip)
+	SoundManager.play_sound_effect_random_pitch(audio_clip)
 
 
 func _on_quit_request():
