@@ -4,8 +4,8 @@ extends Node
 ## Every logic that involve levels should be handled here.
 
 ## Hero is always needed, hence preloaded.
-var hero = preload("res://scenes/entities/hero/Hero.tscn")
-var nemesis = preload("res://scenes/Nemesis.tscn")
+var hero = preload("res://scenes/hero/Hero.tscn")
+var nemesis = preload("res://scenes/enemy/Nemesis.tscn")
 
 ## Levels handling
 var reached_level: int = 0
@@ -17,8 +17,6 @@ var levels = []
 const BOTTOM_POSITION_OFFSET: int = 150
 const LEVELS_FOLDER_PATH: String = "res://levels"
 var viewport_size: Vector2
-
-signal quit
 
 
 func init(saved_reached_level: int):
@@ -67,7 +65,6 @@ func load_next_level():
 		print("[Scene Manager] Nemesis not found, instantiating a new one")
 		nemesis_instance = nemesis.instantiate()
 		add_child(nemesis_instance)
-		nemesis_instance.connect(Literals.Signals.ENEMIES_DEFEATED, _on_enemies_defeated)
 
 	nemesis_instance.reset_stats(current_level.level_name, current_level.waves)
 
@@ -87,7 +84,7 @@ func _on_hero_shoot(
 func _on_quit_request():
 	for child in get_children():
 		child.queue_free()
-	quit.emit()
+	UserInterface.pop_menu()
 
 
 func _on_enemies_defeated():

@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=3 uid="uid://rn3w0gog4ou5"]
+
+[ext_resource type="Script" path="res://scripts/enemy/rewards.gd" id="1_14tnv"]
+[ext_resource type="AudioStream" uid="uid://c12yw3n4vjn67" path="res://assets/audio/health-up.wav" id="2_62h4o"]
+[ext_resource type="Texture2D" uid="uid://b5vbgeviwh7cy" path="res://assets/sprites/pickupables/earth.png" id="3_brj83"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kdol"]
+atlas = ExtResource("3_brj83")
+region = Rect2(0, 0, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo1fr"]
+atlas = ExtResource("3_brj83")
+region = Rect2(64, 0, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx2qe"]
+atlas = ExtResource("3_brj83")
+region = Rect2(128, 0, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dj47"]
+atlas = ExtResource("3_brj83")
+region = Rect2(192, 0, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1x88k"]
+atlas = ExtResource("3_brj83")
+region = Rect2(256, 0, 64, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7he1"]
+atlas = ExtResource("3_brj83")
+region = Rect2(320, 0, 64, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p1x8y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kdol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vo1fr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx2qe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dj47")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1x88k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7he1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xijxt"]
+radius = 36.0139
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 2
+collision_mask = 512
+script = ExtResource("1_14tnv")
+pickup_sound = ExtResource("2_62h4o")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p1x8y")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xijxt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

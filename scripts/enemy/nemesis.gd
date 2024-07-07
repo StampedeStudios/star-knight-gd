@@ -3,14 +3,14 @@ extends Node
 ##
 ## Every logic that involve enemy attacks will be handled here.
 
-const ENEMY_SHIP: PackedScene = preload ("res://scenes/entities/Enemy.tscn")
+const ENEMY_SHIP: PackedScene = preload ("res://scenes/enemy/Enemy.tscn")
+const ENEMY_REWARD: PackedScene = preload ("res://scenes/enemy/Rewards.tscn")
 
 var level_name: String
 var enemies_left: int
 var waves: Array
 
 var viewport: Vector2
-signal enemies_defetead
 
 func reset_stats(l_name: String, wave_info: Array):
 	level_name = l_name
@@ -55,9 +55,13 @@ func _spawn_enemies(num_enemies: int):
 		enemy.connect(Literals.Signals.DEATH, _on_enemy_death)
 		add_child(enemy)
 	pass
-
-func _on_enemy_death():
+	
+func _on_enemy_death(enemy_name:String,enemy_pos:Vector2):
+	var reward = ENEMY_REWARD.instantiate()
+	reward.position = enemy_pos
+	reward.init_reward(enemy_name)
+	call_deferred("add_child",reward)
+	
 	enemies_left = enemies_left - 1
-
 	if enemies_left == 0:
-		enemies_defetead.emit()
+		SceneManager._on_enemies_defeated()

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Hero
 ## Script that handles the logic of the player described as `Hero`.
 ##
 ## Movement, shooting and health of player are handled by this script.
@@ -20,7 +21,7 @@ extends CharacterBody2D
 ## Sound effect to be played whenever hero shoots.
 const HERO_SHOOT_SFX = preload ("res://assets/audio/hero_shoot.wav")
 ## Default hero bullet type.
-const BULLET: PackedScene = preload ("res://scenes/entities/Bullet.tscn")
+const BULLET: PackedScene = preload ("res://scenes/hero/Bullet.tscn")
 @onready var hud = $HUD
 
 var input: Vector2 = Vector2.ZERO
@@ -30,14 +31,8 @@ var timer: Timer
 var ammunition: int = magazine_size
 var is_reloading: bool = false
 
-var health: int = max_health:
-	set(damage):
-		var new_value: int = health - damage
-		if (new_value <= 0):
-			new_value = 0
-		elif (new_value > max_health):
-			new_value = max_health
-		health = new_value
+var health: int = max_health
+
 ## Shooting action to be handled by the Game Manager.
 signal shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream)
 signal death()
@@ -95,11 +90,20 @@ func _reload():
 
 ## Handles the health of the hero upon collision
 func get_hurt(damage: int):
-	health = damage
+	health -= damage
 	if (health<=0):
 		death.emit()
 		self.queue_free()
 	hud.update_health(health, max_health)
+	
+func get_heal(heal: int):
+	health += heal
+	hud.update_health(health, max_health)
+	while health>max_health:
+		await get_tree().create_timer(1.0).timeout
+		health-=1 
+		hud.update_health(health, max_health)
+		
 
 ## Handles normalization of player input.
 func _get_input():

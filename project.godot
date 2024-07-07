@@ -11,16 +11,17 @@ config_version=5
 [application]
 
 config/name="Star Knight"
-run/main_scene="res://scenes/GameManager.tscn"
+run/main_scene="res://scenes/Game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/fullsize=false
 
 [autoload]
 
 SoundManager="*res://scenes/SoundManager.tscn"
-SceneManager="*res://scenes/SceneManager.tscn"
+SceneManager="*res://scripts/scene_manager/scene_manager.gd"
 UserInterface="*res://scenes/user_interface/UserInterface.tscn"
-GameManager="*res://scenes/GameManager.tscn"
+GameManager="*res://scripts/game_manager/game_manager.gd"
+StaticData="*res://scripts/static_data.gd"
 
 [display]
 
@@ -30,6 +31,15 @@ window/size/viewport_height=1440
 [dotnet]
 
 project/assembly_name="Star Knight"
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://levels/": "green",
+"res://scenes/": "orange",
+"res://scripts/": "blue"
+}
 
 [filesystem]
 
