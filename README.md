@@ -13,7 +13,7 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
 
 ### Basic
 - [ ] Hero/Enemies:
-  - [ ] Health handler:
+  - [x] Health handler:
   - [x] Movement;
   - [x] Shooting;
 - [x] Enemy handler:
@@ -29,11 +29,11 @@ All sound effects are made in-house and edited with [Audacity](https://www.audac
   - [x] HUD;
 
 ### Gameplay
-- [ ] Pickupables
-  - [ ] Instant perks
-    - [ ] Health packs
+- [x] Pickupables
+  - [x] Instant perks
+	- [x] Health packs
   - [ ] Timed perks
-    - [ ] Gun upgrade
+	- [ ] Gun upgrade
 
 ### Levels improvments
 - [ ] Environment

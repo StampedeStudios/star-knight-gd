@@ -1,0 +1,9 @@
+{
+	"SHIP":{
+		"max_health":100,
+		"impact_damage":20,
+		"rewards":{
+			"health":0.2,
+		}
+	}
+}

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bnbe4jji7sdc1"]
 
-[ext_resource type="Script" path="res://scripts/entities/hero/hero.gd" id="1_dvsan"]
+[ext_resource type="Script" path="res://scripts/hero/hero.gd" id="1_dvsan"]
 [ext_resource type="Texture2D" uid="uid://btyygwanjdwwa" path="res://assets/sprites/hero/hero.png" id="3_6qvtl"]
 [ext_resource type="PackedScene" uid="uid://cxvd4yprk0crc" path="res://scenes/user_interface/HUD.tscn" id="4_5ccou"]
 
