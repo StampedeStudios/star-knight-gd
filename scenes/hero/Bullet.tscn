@@ -1,21 +1,77 @@
-[gd_scene load_steps=4 format=3 uid="uid://buap45ve521ia"]
+[gd_scene load_steps=11 format=3 uid="uid://buap45ve521ia"]
 
 [ext_resource type="Script" path="res://scripts/hero/bullet.gd" id="1_1bdwk"]
 [ext_resource type="Texture2D" uid="uid://ctiggokrrfb3p" path="res://assets/sprites/hero/hero_bullet.png" id="2_5gngv"]
+[ext_resource type="Texture2D" uid="uid://bugvcyx1gdun4" path="res://assets/sprites/hero/explosion.png" id="2_236ir"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cm6s"]
-radius = 5.0
-height = 24.0
+radius = 4.0
+height = 18.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fr8am"]
+atlas = ExtResource("2_236ir")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_013hg"]
+atlas = ExtResource("2_236ir")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anqvw"]
+atlas = ExtResource("2_236ir")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnve4"]
+atlas = ExtResource("2_236ir")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_45trx"]
+atlas = ExtResource("2_5gngv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lu43x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fr8am")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_013hg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anqvw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnve4")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_45trx")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}]
 
 [node name="Area2D" type="Area2D"]
 collision_layer = 4
 script = ExtResource("1_1bdwk")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_5gngv")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_7cm6s")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_lu43x")
+animation = &"moving"
+metadata/_edit_lock_ = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
