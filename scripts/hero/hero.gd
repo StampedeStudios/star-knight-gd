@@ -11,7 +11,7 @@ class_name Hero
 ## Default friction of the hero ship.
 @export_range(1000, 5000) var friction: float = 3000
 ## Number of bullets that player is able too shoot within a second.
-@export_range(1, 10) var rate_of_fire: float = 10
+@export_range(1, 10) var rate_of_fire: float = 4
 ## Maximum number of bullets in the ammunition
 @export_range(20, 30) var magazine_size: int = 22
 ## Reload time in seconds
@@ -34,13 +34,18 @@ var is_reloading: bool = false
 
 var health: int = max_health
 
+class Animations:
+	const IDLE := 'idle'
+	const ACCELERATING := 'accelerating'
+	const CRUISING := 'cruising'
+
 ## Shooting action to be handled by the Game Manager.
 signal shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream)
 signal death()
 signal quit
 
 func _ready():
-	animated_sprite_2d.animation = 'idle'
+	animated_sprite_2d.animation = Animations.IDLE
 	hud.update_ammo_count(ammunition, magazine_size)
 	hud.update_health(health, max_health)
 	timer = Timer.new()
@@ -65,14 +70,18 @@ func _unhandled_key_input(event):
 ## Handles player movement.
 func player_movement(delta):
 	input = _get_input()
+	if (input.y < 0):
+		animated_sprite_2d.play(Animations.ACCELERATING)
 	if input == Vector2.ZERO:
 		if velocity.length() > (friction * delta):
 			velocity -= velocity.normalized() * (friction * delta)
 		else:
 			velocity = Vector2.ZERO
+			animated_sprite_2d.play(Animations.IDLE)
 	else:
 		velocity += (input * accel * delta)
 		velocity = velocity.limit_length(max_speed)
+
 	animated_sprite_2d.play()
 	move_and_slide()
 
@@ -94,7 +103,7 @@ func _reload():
 ## Handles the health of the hero upon collision
 func get_hurt(damage: int):
 	health -= damage
-	if (health<=0):
+	if (health <= 0):
 		death.emit()
 		self.queue_free()
 	hud.update_health(health, max_health)
@@ -102,11 +111,10 @@ func get_hurt(damage: int):
 func get_heal(heal: int):
 	health += heal
 	hud.update_health(health, max_health)
-	while health>max_health:
+	while health > max_health:
 		await get_tree().create_timer(1.0).timeout
-		health-=1 
+		health -= 1
 		hud.update_health(health, max_health)
-		
 
 ## Handles normalization of player input.
 func _get_input():
