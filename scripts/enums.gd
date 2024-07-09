@@ -16,7 +16,6 @@ enum GameEvent {
 	QUIT,
 }
 
-enum EnemyType{
+enum EnemyType {
 	SHIP,
 }
-

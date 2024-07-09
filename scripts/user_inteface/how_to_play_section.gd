@@ -7,4 +7,4 @@ signal control_triggered(event: Enums.MenuEvent)
 ##
 ## This function simply propagate the signal to be handled by upper parent which is typically the [code]User Interface[/code].
 func _on_back_to_meno_btn_pressed():
-    control_triggered.emit(Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED)
+	control_triggered.emit(Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED)

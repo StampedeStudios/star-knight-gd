@@ -1,3 +1,30 @@
-[gd_scene format=3 uid="uid://dobp3wdfvir5u"]
+[gd_scene load_steps=7 format=3 uid="uid://dobp3wdfvir5u"]
+
+[ext_resource type="Script" path="res://scripts/game_manager/game.gd" id="1_3mmm0"]
+[ext_resource type="Texture2D" uid="uid://g2y7gav1cib2" path="res://assets/texture/noise_texture.png" id="2_7yost"]
+[ext_resource type="Shader" path="res://shaders/space.gdshader" id="2_bc0h6"]
+[ext_resource type="Texture2D" uid="uid://ceg0v25b4tf2q" path="res://assets/texture/skybox.png" id="3_0gqim"]
+[ext_resource type="Texture2D" uid="uid://br6ph5yh1j8b8" path="res://assets/texture/planet_nmap.png" id="4_3a8aa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r2k5t"]
+shader = ExtResource("2_bc0h6")
+shader_parameter/time = 0.0
+shader_parameter/SPEED = 10.0
+shader_parameter/sunColor = Vector3(3.7, 3.575, 0.05)
+shader_parameter/sunDir = Vector3(-0.169, 0.767, 0.682)
+shader_parameter/noiseTexture = ExtResource("2_7yost")
+shader_parameter/backgroundTexture = ExtResource("3_0gqim")
+shader_parameter/planetNormalMap = ExtResource("4_3a8aa")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_3mmm0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_r2k5t")
+offset_left = -576.0
+offset_top = -114.0
+offset_right = 1176.0
+offset_bottom = 1967.0
+texture = ExtResource("3_0gqim")
+expand_mode = 4
