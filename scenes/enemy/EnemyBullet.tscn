@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvns1d1vnq3qr"]
+
+[ext_resource type="Script" path="res://scripts/enemy/enemy_bullet.gd" id="1_47a6v"]
+[ext_resource type="Texture2D" uid="uid://ctiggokrrfb3p" path="res://assets/sprites/hero/hero_bullet.png" id="2_46di3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cm6s"]
+radius = 5.0
+height = 24.0
+
+[node name="Area2D" type="Area2D"]
+collision_mask = 512
+script = ExtResource("1_47a6v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_46di3")
+flip_v = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_7cm6s")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

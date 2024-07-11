@@ -90,8 +90,10 @@ func _shoot():
 	ammunition = ammunition - 1
 	hud.update_ammo_count(ammunition, magazine_size)
 	can_shoot = false
-	if ammunition != 0:
+	if ammunition > 0:
 		timer.start(1 / rate_of_fire)
+	else:
+		_reload()
 
 func _reload():
 	is_reloading = true
