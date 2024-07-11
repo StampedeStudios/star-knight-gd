@@ -24,6 +24,8 @@ class Signals:
 class EnemyStats:
 	const MAX_HEALTH := 'max_health'
 	const IMPACT_DAMAGE := 'impact_damage'
+	const SPEED := 'speed'
+	const GUN := 'gun'
 	const REWARD := 'rewards'
 
 ## Literals asssociated with enemy rewards
@@ -31,3 +33,11 @@ class EnemyRewards:
 	const LIFE := 'health'
 	const LIFE_AMOUNT := 20
 	const COIN := 'coin'
+
+## Literals associated with enemy gun
+class EnemyGun:
+	const FIRE_RATE := 'fire_rate'
+	const AMMO_DAMAGE := 'ammo_damage'
+	const AMMO_SPEED := 'ammo_speed'
+	const AMMO_BURST := 'ammo_burst'
+	

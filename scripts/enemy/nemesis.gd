@@ -53,6 +53,7 @@ func _spawn_enemies(num_enemies: int):
 		var x_position = next_position_x * interval_x
 		enemy.position = Vector2(x_position, interval_y)
 		enemy.connect(Literals.Signals.DEATH, _on_enemy_death)
+		enemy.connect(Literals.Signals.SHOOT, _on_enemy_shoot)
 		add_child(enemy)
 	pass
 	
@@ -64,4 +65,12 @@ func _on_enemy_death(enemy_name:String,enemy_pos:Vector2):
 	
 	enemies_left = enemies_left - 1
 	if enemies_left == 0:
-		SceneManager._on_enemies_defeated()
+		SceneManager._on_enemies_defeated()		
+		
+func _on_enemy_shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream):
+	var spawned_bullet = bullet.instantiate()
+	add_child(spawned_bullet)
+	spawned_bullet.rotation = direction
+	spawned_bullet.position = location
+#	spawned_bullet.velocity = spawned_bullet.velocity.rotated(direction)
+	SoundManager.play_sound_effect_random_pitch(audio_clip)
