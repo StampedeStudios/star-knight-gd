@@ -16,17 +16,31 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="Content" type="VBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 137.91)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Health" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="TopSection" type="HBoxContainer" parent="MarginContainer/Content"]
+layout_mode = 2
+alignment = 2
+
+[node name="Points" type="Label" parent="MarginContainer/Content/TopSection"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="BottomSection" type="HBoxContainer" parent="MarginContainer/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Health" type="HBoxContainer" parent="MarginContainer/Content/BottomSection"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/Health"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/Content/BottomSection/Health"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(250, 50)
 layout_mode = 2
@@ -35,11 +49,11 @@ size_flags_vertical = 8
 value = 36.34
 show_percentage = false
 
-[node name="Ammunition" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="Ammunition" type="HBoxContainer" parent="MarginContainer/Content/BottomSection"]
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="AmmoCount" type="Label" parent="MarginContainer/HBoxContainer/Ammunition"]
+[node name="AmmoCount" type="Label" parent="MarginContainer/Content/BottomSection/Ammunition"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(6.31, 2.08165e-12)
 layout_mode = 2

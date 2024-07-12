@@ -2,6 +2,11 @@ extends CanvasLayer
 
 ## Signal that handles all death screen events.
 signal control_triggered(event: Enums.MenuEvent)
+@onready var score_label = %ScoreLabel
+
+
+func init(score: int):
+	score_label.text = "Score: [color=red]%d[/color]" % score
 
 
 ## Signal emitted when [code]quit_btn[/code] is pressed from death screen.

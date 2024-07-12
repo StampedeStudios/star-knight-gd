@@ -50,7 +50,6 @@ func _spawn_enemies(num_enemies: int):
 	var interval_x: int = int(viewport.x / enemies)
 	var interval_y: int = 200
 	for index in range(0, num_enemies):
-		print("Spawning enemy #%d out of %d" % [index, num_enemies])
 		if not stopped:
 			var random_waiting_time: int = randi_range(1, 5)
 			await get_tree().create_timer(random_waiting_time).timeout
@@ -74,6 +73,7 @@ func _on_enemy_death(enemy_name: String, enemy_pos: Vector2):
 	reward.position = enemy_pos
 	reward.init_reward(enemy_name)
 	call_deferred("add_child", reward)
+	SceneManager.on_enemy_death()
 
 	enemies_left = enemies_left - 1
 	if enemies_left == 0:

@@ -59,8 +59,10 @@ func get_hurt(damage: int):
 
 func _on_body_entered(body):
 	if body.has_method("get_hurt"):
+		# Deal damage to the hero
 		body.get_hurt(_enemy_stats[Literals.EnemyStats.IMPACT_DAMAGE])
-		animated_sprite_2d.animation = Animations.DEATH
+		# Deal max damage to self
+		get_hurt(_enemy_stats[Literals.EnemyStats.MAX_HEALTH])
 
 
 func _on_animated_sprite_2d_animation_finished():
