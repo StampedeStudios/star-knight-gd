@@ -74,15 +74,19 @@ theme_override_font_sizes/font_size = 46
 text = "RESTART?"
 horizontal_alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/Background/Content/VBoxContainer"]
+[node name="DeathMsg" type="RichTextLabel" parent="Control/Background/Content/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 28
-bbcode_enabled = true
 text = "Your ship has been destroyed.
-Better luck next time.
+Better luck next time."
 
-Score: [color=red]12390[/color]"
+[node name="ScoreLabel" type="RichTextLabel" parent="Control/Background/Content/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Score: [color=red]12390[/color]"
 
 [node name="Actions" type="HBoxContainer" parent="Control/Background/Content/VBoxContainer"]
 layout_mode = 2

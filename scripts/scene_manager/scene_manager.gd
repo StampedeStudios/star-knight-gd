@@ -13,6 +13,7 @@ var hero_instance: Node
 var nemesis_instance: Node
 var current_level: Node
 var levels = []
+var score: int = 0
 
 const BOTTOM_POSITION_OFFSET: int = 150
 const LEVELS_FOLDER_PATH: String = "res://levels"
@@ -21,7 +22,7 @@ var viewport_size: Vector2
 
 func init(saved_reached_level: int):
 	reached_level = saved_reached_level
-	## Refreshing viewport size to handle windows resizing
+	# Refreshing viewport size to handle windows resizing
 	viewport_size = get_viewport().size
 
 	var levels_directory: DirAccess = DirAccess.open(LEVELS_FOLDER_PATH)
@@ -97,9 +98,14 @@ func _on_enemies_defeated():
 
 
 func _on_hero_death():
+	UserInterface.pop_death_screen(score)
 	_clean_scene()
-	UserInterface.pop_death_screen()
 	print_debug("GAME OVER")
+
+
+func on_enemy_death():
+	score += 1
+	hero_instance.update_score(1)
 
 
 func _finish_game():
@@ -107,6 +113,8 @@ func _finish_game():
 
 
 func _clean_scene():
+	# Resetting score
+	score = 0
 	if is_instance_valid(nemesis_instance):
 		nemesis_instance.reset()
 		nemesis_instance.queue_free()

@@ -16,6 +16,8 @@ const CHANGE_UI_SFX = preload("res://assets/audio/change_ui_sfx.wav")
 
 func _ready():
 	how_to_play_section.hide()
+	# Set starting score to zero
+	death_screen.init(0)
 	death_screen.hide()
 
 
@@ -62,9 +64,10 @@ func pop_menu():
 
 
 ## Hides all menu elements but [code]Menu[/code].
-func pop_death_screen():
+func pop_death_screen(score: int):
 	menu.hide()
 	how_to_play_section.hide()
+	death_screen.init(score)
 	death_screen.show()
 
 
