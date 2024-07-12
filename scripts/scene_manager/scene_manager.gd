@@ -66,7 +66,7 @@ func load_next_level():
 		nemesis_instance = nemesis.instantiate()
 		add_child(nemesis_instance)
 
-	nemesis_instance.reset_stats(current_level.level_name, current_level.waves)
+	nemesis_instance.clean_restart(current_level.level_name, current_level.waves)
 
 
 ## Handles the bullet spawning process when [code]hero[/code] is shooting.
@@ -82,8 +82,7 @@ func _on_hero_shoot(
 
 
 func _on_quit_request():
-	for child in get_children():
-		child.queue_free()
+	_clean_scene()
 	UserInterface.pop_menu()
 
 
@@ -96,11 +95,27 @@ func _on_enemies_defeated():
 	else:
 		load_next_level()
 
+
 func _on_hero_death():
-	# TODO Handle Game Over
-	print_debug('GAME OVER')
+	_clean_scene()
+	UserInterface.pop_death_screen()
+	print_debug("GAME OVER")
+
 
 func _finish_game():
-	nemesis_instance.queue_free()
-	current_level.queue_free()
 	print("GG!")  # TODO: Handle end game
+
+
+func _clean_scene():
+	if is_instance_valid(nemesis_instance):
+		nemesis_instance.reset()
+		nemesis_instance.queue_free()
+
+	for child in get_children():
+		child.queue_free()
+
+
+func restart():
+	_clean_scene()
+	reached_level = 0
+	load_next_level()

@@ -27,7 +27,7 @@ float noise(in vec3 position) {
 
     // Compute texture coordinates
     vec2 textureCoords = (integerPart.xy + vec2(37.0, 17.0) * integerPart.z) + fractionalPart.xy;
-    
+
     // Fetch the texture values
     vec2 textureValues = textureLod(noiseTexture, (textureCoords + 0.5) / 256.0, 0.0).yx;
 
@@ -77,11 +77,11 @@ float intersectPlanets(vec3 pos, vec3 dir, out vec3 normal, out float maxDistanc
         vec3 planetCenter = vec3(cos(planetAngle) * planetDistance, sin(planetAngle) * planetDistance, (PLANET_CYCLE - planetPos) * 10.0);
         vec3 delta = pos - planetCenter;
         float sphereRadius = 2.0;
-    
+
         float B = dot(dir, delta);
         float C = dot(delta, delta) - sphereRadius * sphereRadius;
         float D = B * B - C;
-        
+
         if(D >= 0.0) {
             float t = -B - sqrt(D);
 
@@ -114,7 +114,7 @@ vec3 backgroundInner(vec3 pos, vec3 dir, bool enableSun, out bool sphereHit, out
     vec2 uv = vec2(cos(dir.y), atan(dir.x, dir.z));
     vec3 a = texture(backgroundTexture, uv * 0.8).rgb;
     vec3 b = texture(backgroundTexture, uv * 0.5).rgb;
-    
+
     color *= (a * b) * 2.0;
     color += pow(texture(backgroundTexture, uv * 2.0).rgb, vec3(2.0)) * 1.5;
 
@@ -175,19 +175,19 @@ vec3 backgroundInner(vec3 pos, vec3 dir, bool enableSun, out bool sphereHit, out
             color = opaque + pow(max(0.0, dot(bumpedNormal, normalize(-dir + sunDir))), specPower) * (specPower + 8.0) / (8.0 * PI) * sunColor * reflectivity;
 
             vec3 sky = vec3(0.9) * NdotL * sunColor;
-            color = mix(color, sky, skyLerp);        
+            color = mix(color, sky, skyLerp);
         }
 
         sphereHit = true;
     }
-    
+
     return color;
 }
-    
+
 vec3 Background(vec3 pos, vec3 dir) {
 
     dir = normalize(dir);
-    
+
     bool sphereHit;
     vec3 spherePos;
     vec3 sphereNormal;
@@ -203,7 +203,7 @@ vec3 Background(vec3 pos, vec3 dir) {
         vec3 dummyNormal;
         color += (backgroundInner(spherePos + sphereNormal * 0.01, reflectionDir, false, dummyHit, dummyPos, dummyNormal, reflectivity) * (1.0 - R) + vec3(1,2,3) * 0.075) * R * sunColor;
     }
-    
+
     return color;
 }
 
@@ -213,10 +213,10 @@ vec3 LensFlare(vec2 x, in vec2 iResolution) {
     x = abs(x);
     float e = 1.5;
     float d = pow(pow(x.x * 0.5, e) + pow(x.y * 3.0, e), 1.0 / e);
-    
+
     vec3 c = vec3(exp(-2.5 * d)) * sunColor * (0.3 + sin(x.y * iResolution.y * 2.0) * 0.01) * 0.5;
     c += vec3(exp(-dot(vec3(d), vec3(d)))) * sunColor * 0.05;
-    
+
     return c;
 }
 
@@ -225,23 +225,23 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord, in vec2 iResolution) {
     vec2 uv = fragCoord / iResolution.xy;
     vec3 camPos = vec3(0);
     float z_offset = time * SPEED;
- 
+
     float introFade = 1.0;
-    
+
     float camZoom = 1.0;
-    
+
     camPos.xy += vec2(0.0) * 0.1;
     vec3 camTarget = vec3(1, 0, 5);
     camTarget.xy += vec2(0.0) * 0.5;
     camTarget = mix(vec3(3, 0, 5), camTarget, introFade);
-    
+
     float camAngle = 1.0;
     vec3 camUp = vec3(sin(camAngle), cos(camAngle), 0);
 
     mat4 viewToWorld = lookAtMatrix(camPos, camTarget, camUp);
     vec2 uv2 = (fragCoord - 0.5 * iResolution.xy) / (iResolution.y * camZoom);
     vec3 eyeDir = (viewToWorld * normalize(vec4(uv2, 1, 0))).xyz;
-    
+
     float t = 0.0;
     vec3 p = camPos;
     float iterationCount = 0.0;
@@ -261,31 +261,31 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord, in vec2 iResolution) {
     vec3 normal = normal(p, z_offset);
     vec3 refraction = refract(normalize(eyeDir), normal, 1.0);
     vec3 reflection = reflect(-normalize(eyeDir), normal);
-    
+
     vec3 R = vec3(0);
     vec3 c = vec3(1);
     vec3 outColor = Background(p, refraction) * (vec3(1.0) - R) * c + Background(p, -reflection) * R;
-    
+
     float fft = 0.5;
     fft = max(0.0, fft - 0.5);
-    
+
     float tunnelDist = length(p - camPos);
     outColor = outColor * exp(-tunnelDist * .01) + (1.0 - exp(-tunnelDist * 0.05)) * vec3(2, 1, 3) * (0.1 + fft * 0.6);
-    
+
     outColor += sqrt(iterationCount) * 0.005;
-    
+
     vec3 sunPos = (vec4(sunDir, 0) * viewToWorld).xyz;
     vec2 sunUV = sunPos.xy / sunPos.z;
 
     float vignette = uv.x * (1.0-uv.x) * uv.y * (1.0-uv.y) * 32. * 0.75 + 0.25;
     outColor *= vignette;
-    
+
     vec3 sphereNormal;
     float max_d;
     int type;
     intersectPlanets(camPos, sunDir, sphereNormal, max_d, type);
     float lensIntensity = clamp(1.0 - max_d * 0.02, 0.0, 1.0);
-    
+
     outColor += LensFlare(uv2 - sunUV, iResolution) * lensIntensity;
     outColor += LensFlare(uv2 + sunUV, iResolution) * 0.6 * lensIntensity;
 
@@ -297,4 +297,3 @@ void fragment() {
     vec2 iResolution = 1.0 / TEXTURE_PIXEL_SIZE;
     mainImage(COLOR, UV * iResolution, iResolution);
 }
-

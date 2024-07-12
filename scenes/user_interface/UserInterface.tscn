@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ct54s10ac24la"]
+[gd_scene load_steps=5 format=3 uid="uid://ct54s10ac24la"]
 
 [ext_resource type="Script" path="res://scripts/user_inteface/user_interface.gd" id="1_38enu"]
 [ext_resource type="PackedScene" uid="uid://rno3jbxogp8r" path="res://scenes/user_interface/Menu.tscn" id="1_qfbop"]
 [ext_resource type="PackedScene" uid="uid://ead0ewemcswu" path="res://scenes/user_interface/HowToPlaySection.tscn" id="3_7k63e"]
+[ext_resource type="PackedScene" uid="uid://brv37edtemhml" path="res://scenes/user_interface/DeathScreen.tscn" id="4_3w8wp"]
 
 [node name="UserInterface" type="Control"]
 layout_mode = 3
@@ -17,5 +18,8 @@ script = ExtResource("1_38enu")
 
 [node name="HowToPlaySection" parent="." instance=ExtResource("3_7k63e")]
 
+[node name="DeathScreen" parent="." instance=ExtResource("4_3w8wp")]
+
 [connection signal="control_triggered" from="Menu" to="." method="_on_menu_control_triggered"]
 [connection signal="control_triggered" from="HowToPlaySection" to="." method="_on_how_to_play_section_control_triggered"]
+[connection signal="control_triggered" from="DeathScreen" to="." method="_on_death_screen_control_triggered"]
