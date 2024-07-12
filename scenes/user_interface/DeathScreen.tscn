@@ -1,0 +1,108 @@
+[gd_scene load_steps=9 format=3 uid="uid://brv37edtemhml"]
+
+[ext_resource type="Theme" uid="uid://ba4822upgnunc" path="res://scenes/user_interface/styles/Theme.tres" id="1_jo81d"]
+[ext_resource type="Script" path="res://scripts/user_inteface/death_screen.gd" id="1_mceqk"]
+[ext_resource type="Texture2D" uid="uid://byq5cbtnpqafh" path="res://assets/user_interface/death_screen_bg.png" id="2_g2gsh"]
+[ext_resource type="Texture2D" uid="uid://bvhe4dwmndnov" path="res://assets/user_interface/shortcuts/g.png" id="4_35xkb"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_c4bca"]
+device = -1
+keycode = 81
+unicode = 81
+
+[sub_resource type="Shortcut" id="Shortcut_ja1ju"]
+events = [SubResource("InputEventKey_c4bca")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_jvx4s"]
+keycode = 71
+unicode = 71
+
+[sub_resource type="Shortcut" id="Shortcut_npf2i"]
+events = [SubResource("InputEventKey_jvx4s")]
+
+[node name="DeathScreen" type="CanvasLayer"]
+script = ExtResource("1_mceqk")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Background" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -200.0
+offset_right = 256.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_g2gsh")
+expand_mode = 2
+
+[node name="Content" type="MarginContainer" parent="Control/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Background/Content"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="Control/Background/Content/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 46
+text = "RESTART?"
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Background/Content/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "Your ship has been destroyed.
+Better luck next time.
+
+Score: [color=red]12390[/color]"
+
+[node name="Actions" type="HBoxContainer" parent="Control/Background/Content/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 25
+
+[node name="QuitBtn" type="Button" parent="Control/Background/Content/VBoxContainer/Actions"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+shortcut = SubResource("Shortcut_ja1ju")
+text = "QUIT"
+flat = true
+
+[node name="RestartBtn" type="Button" parent="Control/Background/Content/VBoxContainer/Actions"]
+layout_mode = 2
+theme = ExtResource("1_jo81d")
+shortcut = SubResource("Shortcut_npf2i")
+shortcut_in_tooltip = false
+text = "RESTART "
+icon = ExtResource("4_35xkb")
+
+[connection signal="pressed" from="Control/Background/Content/VBoxContainer/Actions/QuitBtn" to="." method="_on_quit_btn_pressed"]
+[connection signal="pressed" from="Control/Background/Content/VBoxContainer/Actions/RestartBtn" to="." method="_on_restart_btn_pressed"]

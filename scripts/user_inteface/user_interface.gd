@@ -7,6 +7,8 @@ extends Control
 @onready var menu: CanvasLayer = $Menu
 ## HTP Section Canvas Layer
 @onready var how_to_play_section: CanvasLayer = $HowToPlaySection
+## Death screen
+@onready var death_screen = $DeathScreen
 
 const BTN_SFX = preload("res://assets/audio/button.wav")
 const CHANGE_UI_SFX = preload("res://assets/audio/change_ui_sfx.wav")
@@ -14,6 +16,7 @@ const CHANGE_UI_SFX = preload("res://assets/audio/change_ui_sfx.wav")
 
 func _ready():
 	how_to_play_section.hide()
+	death_screen.hide()
 
 
 ## Handles all [param event] coming from Menu Canvas Leyer.
@@ -53,11 +56,34 @@ func _pop_how_to_play():
 ## Hides all menu elements but [code]Menu[/code].
 func pop_menu():
 	how_to_play_section.hide()
+	death_screen.hide()
 	SoundManager.play_sound_effect(CHANGE_UI_SFX)
 	menu.show()
+
+
+## Hides all menu elements but [code]Menu[/code].
+func pop_death_screen():
+	menu.hide()
+	how_to_play_section.hide()
+	death_screen.show()
 
 
 ## Hides all UI elements.
 func hide_all():
 	menu.hide()
 	how_to_play_section.hide()
+	death_screen.hide()
+
+
+func _on_death_screen_control_triggered(event):
+	match event:
+		Enums.MenuEvent.RESTART_BTN_PRESSED:
+			SoundManager.play_sound_effect(BTN_SFX)
+			SceneManager.restart()
+			hide_all()
+			pass
+		Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED:
+			pop_menu()
+			pass
+		_:
+			pass
