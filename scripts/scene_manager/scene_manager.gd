@@ -39,6 +39,8 @@ func init(saved_reached_level: int):
 
 
 func load_next_level():
+	get_tree().paused = false
+
 	if not hero_instance:
 		print("[Scene Manager] Hero not found, instantiating a new one")
 		hero_instance = hero.instantiate()
@@ -103,7 +105,7 @@ func _on_enemies_defeated():
 
 func _on_hero_death():
 	UserInterface.pop_death_screen(score)
-	_clean_scene()
+	clean_scene()
 	print_debug("GAME OVER")
 
 
@@ -116,7 +118,7 @@ func _finish_game():
 	print("GG!")  # TODO: Handle end game
 
 
-func _clean_scene():
+func clean_scene():
 	# Resetting score
 	score = 0
 	if is_instance_valid(nemesis_instance):
@@ -128,6 +130,6 @@ func _clean_scene():
 
 
 func restart():
-	_clean_scene()
+	clean_scene()
 	reached_level = 0
 	load_next_level()

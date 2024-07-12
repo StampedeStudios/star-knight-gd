@@ -2,6 +2,7 @@ extends CanvasLayer
 ## Handle all functionalities and events triggered by the Menu Canvas.
 
 @onready var start_btn = $BtnContainer/StartBtn
+@onready var quit_btn = $BtnContainer/QuitBtn
 
 ## Signal that handles all menu events.
 signal control_triggered(event: Enums.MenuEvent)
@@ -28,7 +29,10 @@ func _on_how_to_play_btn_pressed():
 
 ## Signal emitted when [code]quit[/code] is pressed.
 func _on_quit_btn_pressed():
-	control_triggered.emit(Enums.MenuEvent.QUIT_BTN_PRESSED)
+	if quick_menu:
+		control_triggered.emit(Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED)
+	else:
+		control_triggered.emit(Enums.MenuEvent.QUIT_BTN_PRESSED)
 
 
 func set_quick_menu(is_quick_menu: bool):
@@ -36,3 +40,5 @@ func set_quick_menu(is_quick_menu: bool):
 
 	if quick_menu:
 		start_btn.text = "CONTINUE"
+	else:
+		start_btn.text = "START"
