@@ -38,6 +38,11 @@ func _on_menu_control_triggered(event: Enums.MenuEvent):
 		Enums.MenuEvent.QUIT_BTN_PRESSED:
 			get_tree().quit()
 			pass
+		Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED:
+			SceneManager.clean_scene()
+			menu.set_quick_menu(false)
+			pop_menu()
+			pass
 		Enums.MenuEvent.HOW_TO_PLAY_BTN_PRESSED:
 			_pop_how_to_play()
 			pass
