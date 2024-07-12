@@ -49,6 +49,7 @@ unicode = 103
 events = [SubResource("InputEventKey_ap70t")]
 
 [node name="HowToPlaySection" type="CanvasLayer"]
+process_mode = 3
 offset = Vector2(0.5, 0.5)
 transform = Transform2D(1, 0, 0, 1, 0.5, 0.5)
 script = ExtResource("1_gl0v8")
@@ -148,5 +149,5 @@ shortcut = SubResource("Shortcut_s4fe4")
 text = "Back to the menu"
 icon = ExtResource("2_sirvs")
 
-[connection signal="pressed" from="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3/back_to_meno_btn" to="." method="_on_back_to_meno_btn_pressed"]
 [connection signal="pressed" from="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3/back_to_meno_btn" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/HFlowContainer/VBoxContainer3/back_to_meno_btn" to="." method="_on_back_to_meno_btn_pressed"]

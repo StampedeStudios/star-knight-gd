@@ -16,6 +16,7 @@ const CHANGE_UI_SFX = preload("res://assets/audio/change_ui_sfx.wav")
 
 func _ready():
 	how_to_play_section.hide()
+
 	# Set starting score to zero
 	death_screen.init(0)
 	death_screen.hide()
@@ -27,6 +28,11 @@ func _on_menu_control_triggered(event: Enums.MenuEvent):
 		Enums.MenuEvent.START_BTN_PRESSED:
 			SoundManager.play_sound_effect(BTN_SFX)
 			SceneManager.load_next_level()
+			hide_all()
+			pass
+		Enums.MenuEvent.CONTINUE_BTN_PRESSED:
+			SoundManager.play_sound_effect(BTN_SFX)
+			SceneManager.unstop()
 			hide_all()
 			pass
 		Enums.MenuEvent.QUIT_BTN_PRESSED:
@@ -43,6 +49,11 @@ func _on_menu_control_triggered(event: Enums.MenuEvent):
 func _on_how_to_play_section_control_triggered(event: Enums.MenuEvent):
 	match event:
 		Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED:
+			if get_tree().paused:
+				menu.set_quick_menu(true)
+			else:
+				menu.set_quick_menu(false)
+
 			pop_menu()
 		_:
 			pass
@@ -61,6 +72,11 @@ func pop_menu():
 	death_screen.hide()
 	SoundManager.play_sound_effect(CHANGE_UI_SFX)
 	menu.show()
+
+
+func pop_quick_menu():
+	menu.set_quick_menu(true)
+	pop_menu()
 
 
 ## Hides all menu elements but [code]Menu[/code].
@@ -86,6 +102,7 @@ func _on_death_screen_control_triggered(event):
 			hide_all()
 			pass
 		Enums.MenuEvent.BACK_TO_MENU_BTN_PRESSED:
+			menu.set_quick_menu(false)
 			pop_menu()
 			pass
 		_:
