@@ -106,7 +106,7 @@ func _shoot():
 
 func _reload():
 	is_reloading = true
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	ammunition = magazine_size
 	hud.update_ammo_count(ammunition, magazine_size)
 	is_reloading = false
@@ -125,7 +125,7 @@ func get_heal(heal: int):
 	health += heal
 	hud.update_health(health, max_health)
 	while health > max_health:
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(1.0, false).timeout
 		health -= 1
 		hud.update_health(health, max_health)
 

@@ -76,11 +76,11 @@ func _shoot():
 	if _burst > 0:
 		_ammo_count -= 1
 		if _ammo_count > 0:
-			await get_tree().create_timer(_rate).timeout
+			await get_tree().create_timer(_rate, false).timeout
 		else:
 			_ammo_count = _burst
-			await get_tree().create_timer(_rate * _burst).timeout
+			await get_tree().create_timer(_rate * _burst, false).timeout
 	else:
-		await get_tree().create_timer(_rate).timeout
+		await get_tree().create_timer(_rate, false).timeout
 
 	_can_shoot = true
