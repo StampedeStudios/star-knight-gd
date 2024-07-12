@@ -91,6 +91,14 @@ func _on_enemy_shoot(
 
 
 func reset():
-	stopped = true
+	stop()
 	for child in get_children():
 		child.queue_free()
+
+
+func stop():
+	stopped = true
+
+
+func unstop():
+	stopped = false
