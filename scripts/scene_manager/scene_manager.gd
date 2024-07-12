@@ -83,15 +83,12 @@ func _on_hero_shoot(
 
 
 func _on_quit_request():
-	# _clean_scene()
-	nemesis_instance.stop()
 	get_tree().paused = true
 	UserInterface.pop_quick_menu()
 
 
 func unstop():
 	get_tree().paused = false
-	nemesis_instance.unstop()
 
 
 func _on_enemies_defeated():
