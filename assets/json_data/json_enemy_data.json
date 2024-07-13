@@ -5,8 +5,8 @@
 		"speed":35,
 		"gun":{
 			"fire_rate":0.5,
-			"ammo_burst":3,
-			"ammo_speed":400,
+			"ammo_burst":0,
+			"ammo_speed":100,
 			"ammo_damage":10,
 		},
 		"rewards":{
