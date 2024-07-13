@@ -11,6 +11,7 @@ extends Node
 var sfx_players := []
 var rng = RandomNumberGenerator.new()
 
+
 ## Handle startup events:[br]- Initialization of SFX players pool;
 func _ready():
 	# Initialize Pool
@@ -19,6 +20,7 @@ func _ready():
 		add_child(sfx_player)
 		sfx_players.append(sfx_player)
 
+
 ## Function that consent a sound effect to be played whenever required applying a random pitch scale.
 func play_sound_effect_random_pitch(clip: AudioStream):
 	var player: AudioStreamPlayer = _get_available_sfx_player()
@@ -26,21 +28,25 @@ func play_sound_effect_random_pitch(clip: AudioStream):
 	player.pitch_scale = rng.randf_range(0.8, 1.2)
 	player.play()
 
+
 ## Function that consent a sound effect to be played whenever required.
 func play_sound_effect(clip: AudioStream):
 	var player: AudioStreamPlayer = _get_available_sfx_player()
 	player.set_stream(clip)
 	player.play()
 
+
 ## Provide a free SFX player
-## 
+##
 ## Loop through all AudioStreamPlayer to fetch one that is not already playing a sound effect. If no player are available it creates a new one and add it to the pool.
 func _get_available_sfx_player() -> AudioStreamPlayer:
 	for player in sfx_players:
 		if not player.playing:
 			return player
 
-	push_warning("All AudioStreamPlayer are busy, adding a new one to the pool: {%s}" % sfx_players.size())
+	push_warning(
+		"All AudioStreamPlayer are busy, adding a new one to the pool: {%s}" % sfx_players.size()
+	)
 	var new_player = AudioStreamPlayer.new()
 	add_child(new_player)
 	sfx_players.append(new_player)
