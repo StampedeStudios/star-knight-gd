@@ -1,4 +1,4 @@
-extends Area2D
+extends Node
 
 @export var area_limit : CollisionShape2D
 @export var left : CollisionShape2D
@@ -12,7 +12,7 @@ func _ready():
 
 
 func _on_viewport_change():
-	var pos = get_viewport_rect().size
+	var pos = get_viewport().size
 	area_limit.position = pos/2
 	area_limit.scale = pos
 	
