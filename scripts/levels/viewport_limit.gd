@@ -1,10 +1,10 @@
 extends Area2D
 
-@onready var area_limit = $CollisionShape2D
-@onready var left = $"../StaticBody2D/Left"
-@onready var right = $"../StaticBody2D/Right"
-@onready var top = $"../StaticBody2D/Top"
-@onready var bottom = $"../StaticBody2D/Bottom"
+@export var area_limit : CollisionShape2D
+@export var left : CollisionShape2D
+@export var right : CollisionShape2D
+@export var top : CollisionShape2D
+@export var bottom : CollisionShape2D
 
 
 func _ready():
@@ -29,5 +29,6 @@ func _on_viewport_change():
 	bottom.shape.a = bottom_left
 	bottom.shape.b = bottom_right
 
-func _on_area_exited(area):
+
+func _on_area_limit_area_exited(area):
 	area.queue_free()
