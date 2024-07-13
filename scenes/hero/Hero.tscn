@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://btyygwanjdwwa" path="res://assets/sprites/hero/hero.png" id="3_6qvtl"]
 [ext_resource type="PackedScene" uid="uid://cxvd4yprk0crc" path="res://scenes/user_interface/HUD.tscn" id="4_5ccou"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xo3qo"]
-radius = 58.0086
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfomp"]
+radius = 66.0
+height = 132.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idhti"]
 atlas = ExtResource("3_6qvtl")
@@ -105,14 +106,13 @@ animations = [{
 [node name="CharacterBody2D" type="CharacterBody2D"]
 z_index = 10
 collision_layer = 512
-collision_mask = 0
+collision_mask = 512
 script = ExtResource("1_dvsan")
 
 [node name="HUD" parent="." instance=ExtResource("4_5ccou")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 0)
-shape = SubResource("CircleShape2D_xo3qo")
+shape = SubResource("CapsuleShape2D_rfomp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
