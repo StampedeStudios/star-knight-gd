@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1x027mn21usp"]
+
+[ext_resource type="Script" path="res://scripts/levels/viewport_limit.gd" id="1_r3fu6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7ios"]
+size = Vector2(820, 1440)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_q0kim"]
+b = Vector2(0, 1440)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_8gl8i"]
+b = Vector2(820, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_1t6ap"]
+a = Vector2(820, 0)
+b = Vector2(820, 1440)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gr468"]
+a = Vector2(0, 1440)
+b = Vector2(820, 1440)
+
+[node name="ViewportLimit" type="Node"]
+
+[node name="AreaLimit" type="Area2D" parent="."]
+monitorable = false
+script = ExtResource("1_r3fu6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaLimit"]
+position = Vector2(410, 720)
+shape = SubResource("RectangleShape2D_n7ios")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="Left" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_q0kim")
+
+[node name="Top" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_8gl8i")
+
+[node name="Right" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_1t6ap")
+
+[node name="Bottom" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_gr468")
+
+[connection signal="area_exited" from="AreaLimit" to="AreaLimit" method="_on_area_exited"]

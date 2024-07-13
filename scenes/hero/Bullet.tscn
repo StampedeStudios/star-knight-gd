@@ -59,7 +59,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Area2D" type="Area2D"]
+[node name="HeroBullet" type="Area2D"]
 collision_layer = 4
 script = ExtResource("1_1bdwk")
 metadata/_edit_lock_ = true

@@ -47,6 +47,7 @@ func load_next_level():
 		add_child(hero_instance)
 
 		# Set position to bottom center
+		viewport_size = get_viewport().size	
 		hero_instance.position = Vector2(
 			viewport_size.x / 2, viewport_size.y - BOTTOM_POSITION_OFFSET
 		)

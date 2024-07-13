@@ -24,11 +24,6 @@ var random_position_treshold: float = 10.0
 func _ready():
 	animated_sprite_2d.animation = Animations.MOVING
 
-	var timer := Timer.new()
-	timer.connect(Literals.Signals.TIMEOUT, queue_free)
-	add_child(timer)
-	timer.start(3)
-
 
 func _physics_process(delta):
 	animated_sprite_2d.play()

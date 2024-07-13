@@ -22,6 +22,7 @@ SceneManager="*res://scripts/scene_manager/scene_manager.gd"
 UserInterface="*res://scenes/user_interface/UserInterface.tscn"
 GameManager="*res://scripts/game_manager/game_manager.gd"
 StaticData="*res://scripts/static_data.gd"
+ViewportLimit="*res://scenes/ViewportLimit.tscn"
 
 [display]
 
