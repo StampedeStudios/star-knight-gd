@@ -17,6 +17,7 @@ func _ready():
 	# Initialize Pool
 	for i in range(sfx_pool_size):
 		var sfx_player = AudioStreamPlayer.new()
+		sfx_player.volume_db = -20
 		add_child(sfx_player)
 		sfx_players.append(sfx_player)
 
@@ -48,6 +49,7 @@ func _get_available_sfx_player() -> AudioStreamPlayer:
 		"All AudioStreamPlayer are busy, adding a new one to the pool: {%s}" % sfx_players.size()
 	)
 	var new_player = AudioStreamPlayer.new()
+	new_player.volume_db = -20
 	add_child(new_player)
 	sfx_players.append(new_player)
 	return new_player
