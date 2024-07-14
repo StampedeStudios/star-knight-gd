@@ -23,7 +23,6 @@ const HERO_SHOOT_SFX = preload("res://assets/audio/hero_shoot.wav")
 ## Default hero bullet type.
 const BULLET: PackedScene = preload("res://scenes/hero/Bullet.tscn")
 @onready var hud = $HUD
-@onready var animated_sprite_2d = $AnimatedSprite2D
 
 var input: Vector2 = Vector2.ZERO
 var can_shoot: bool = true
@@ -34,13 +33,6 @@ var is_reloading: bool = false
 
 var health: int = max_health
 
-
-class Animations:
-	const IDLE := "idle"
-	const ACCELERATING := "accelerating"
-	const CRUISING := "cruising"
-
-
 ## Shooting action to be handled by the Game Manager.
 signal shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream)
 signal death
@@ -48,7 +40,6 @@ signal quit
 
 
 func _ready():
-	animated_sprite_2d.animation = Animations.IDLE
 	hud.update_ammo_count(ammunition, magazine_size)
 	hud.update_health(health, max_health)
 	timer = Timer.new()
@@ -77,19 +68,15 @@ func _unhandled_key_input(event):
 ## Handles player movement.
 func player_movement(delta):
 	input = _get_input()
-	if input.y < 0:
-		animated_sprite_2d.play(Animations.ACCELERATING)
 	if input == Vector2.ZERO:
 		if velocity.length() > (friction * delta):
 			velocity -= velocity.normalized() * (friction * delta)
 		else:
 			velocity = Vector2.ZERO
-			animated_sprite_2d.play(Animations.IDLE)
 	else:
 		velocity += (input * accel * delta)
 		velocity = velocity.limit_length(max_speed)
 
-	animated_sprite_2d.play()
 	move_and_slide()
 
 
