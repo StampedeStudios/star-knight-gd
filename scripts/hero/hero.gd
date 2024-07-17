@@ -11,11 +11,7 @@ class_name Hero
 ## Default friction of the hero ship.
 @export var friction: float = 3000
 ## Number of bullets that player is able too shoot within a second.
-@export_range(1, 10) var rate_of_fire: float = 4
-## Maximum number of bullets in the ammunition
-@export_range(20, 30) var magazine_size: int = 22
-## Reload time in seconds
-@export_range(0.1, 2) var reload_time: float = 1.0
+@export_range(1, 10) var rate_of_fire: float = 240
 ## Health
 @export var max_health = 100
 ## Sound effect to be played whenever hero shoots.
@@ -27,12 +23,9 @@ const BULLET: PackedScene = preload("res://scenes/hero/Bullet.tscn")
 
 var input: Vector2 = Vector2.ZERO
 var can_shoot: bool = true
-var timer: Timer
-
-var ammunition: int = magazine_size
-var is_reloading: bool = false
-
 var health: int = max_health
+
+var timer : Timer
 
 
 class Animations:
@@ -42,24 +35,21 @@ class Animations:
 
 
 ## Shooting action to be handled by the Game Manager.
-signal shoot(bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream)
 signal death
 signal quit
 
 
 func _ready():
 	animated_sprite_2d.animation = Animations.IDLE
-	hud.update_ammo_count(ammunition, magazine_size)
 	hud.update_health(health, max_health)
+	rate_of_fire = 60 / rate_of_fire
 	timer = Timer.new()
 	add_child(timer)
-	timer.connect(Literals.Signals.TIMEOUT, func(): can_shoot = true)
 
 
 func _process(_delta):
-	if can_shoot and ammunition != 0 and !is_reloading:
-		if Input.is_action_pressed(Literals.Inputs.SHOOT):
-			_shoot()
+	if Input.is_action_pressed(Literals.Inputs.SHOOT) and can_shoot:
+		_shoot()
 
 
 func _physics_process(delta):
@@ -68,9 +58,7 @@ func _physics_process(delta):
 
 func _unhandled_key_input(event):
 	if event is InputEventKey:
-		if event.is_action_pressed(Literals.Inputs.RELOAD) and !is_reloading:
-			_reload()
-		elif event.is_action_pressed(Literals.Inputs.QUIT):
+		if event.is_action_pressed(Literals.Inputs.QUIT):
 			quit.emit()
 
 
@@ -94,22 +82,15 @@ func player_movement(delta):
 
 
 func _shoot():
-	shoot.emit(BULLET, rotation, position, HERO_SHOOT_SFX)
-	ammunition = ammunition - 1
-	hud.update_ammo_count(ammunition, magazine_size)
+	var bullet = BULLET.instantiate()
+	bullet.position = position
+	bullet.rotation = rotation
+	get_parent().add_child(bullet)
+	SoundManager.play_sound_effect_random_pitch(HERO_SHOOT_SFX)
 	can_shoot = false
-	if ammunition > 0:
-		timer.start(1 / rate_of_fire)
-	else:
-		_reload()
-
-
-func _reload():
-	is_reloading = true
-	await get_tree().create_timer(1.0, false).timeout
-	ammunition = magazine_size
-	hud.update_ammo_count(ammunition, magazine_size)
-	is_reloading = false
+	timer.start(rate_of_fire)
+	await timer.timeout
+	can_shoot = true
 
 
 ## Handles the health of the hero upon collision

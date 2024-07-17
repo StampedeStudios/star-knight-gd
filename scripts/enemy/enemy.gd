@@ -31,7 +31,7 @@ func _ready():
 	_health = _enemy_stats[Literals.EnemyStats.MAX_HEALTH]
 	_velocity = _enemy_stats[Literals.EnemyStats.SPEED]
 	_burst = _enemy_stats[Literals.EnemyStats.GUN][Literals.EnemyGun.AMMO_BURST]
-	_rate = _enemy_stats[Literals.EnemyStats.GUN][Literals.EnemyGun.FIRE_RATE]
+	_rate = 60 / _enemy_stats[Literals.EnemyStats.GUN][Literals.EnemyGun.FIRE_RATE]
 	_ammo_count = _burst
 
 

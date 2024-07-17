@@ -52,7 +52,6 @@ func load_next_level():
 			viewport_size.x / 2, viewport_size.y - BOTTOM_POSITION_OFFSET
 		)
 
-		hero_instance.connect(Literals.Signals.SHOOT, _on_hero_shoot)
 		hero_instance.connect(Literals.Signals.QUIT_REQUEST, _on_quit_request)
 		hero_instance.connect(Literals.Signals.DEATH, _on_hero_death)
 
@@ -71,18 +70,6 @@ func load_next_level():
 		add_child(nemesis_instance)
 
 	nemesis_instance.clean_restart(current_level.level_name, current_level.waves)
-
-
-## Handles the bullet spawning process when [code]hero[/code] is shooting.
-func _on_hero_shoot(
-	bullet: PackedScene, direction: float, location: Vector2, audio_clip: AudioStream
-):
-	var spawned_bullet = bullet.instantiate()
-	add_child(spawned_bullet)
-	spawned_bullet.rotation = direction
-	spawned_bullet.position = location
-	spawned_bullet.velocity = spawned_bullet.velocity.rotated(direction)
-	SoundManager.play_sound_effect_random_pitch(audio_clip)
 
 
 func _on_quit_request():

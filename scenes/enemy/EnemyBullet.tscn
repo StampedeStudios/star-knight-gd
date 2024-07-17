@@ -1,13 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://cvns1d1vnq3qr"]
 
-[ext_resource type="Script" path="res://scripts/enemy/enemy_bullet.gd" id="1_47a6v"]
+[ext_resource type="Script" path="res://scripts/hero/bullet.gd" id="1_8x0wu"]
 [ext_resource type="Texture2D" uid="uid://1r0rnvwph0dg" path="res://assets/sprites/enemies/enemy_bullet.png" id="2_e651m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gx8lg"]
 
 [node name="EnemyBullet" type="Area2D"]
 collision_mask = 512
-script = ExtResource("1_47a6v")
+script = ExtResource("1_8x0wu")
+_velocity = 500
+damage = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_e651m")

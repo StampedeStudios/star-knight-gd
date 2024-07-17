@@ -90,6 +90,7 @@ animations = [{
 }]
 
 [node name="Enemy" type="Area2D"]
+rotation = 3.14159
 collision_mask = 513
 script = ExtResource("1_4468n")
 
@@ -101,6 +102,7 @@ sprite_frames = SubResource("SpriteFrames_04nk8")
 animation = &"death"
 frame = 8
 frame_progress = 1.0
+flip_v = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
