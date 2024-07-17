@@ -48,15 +48,3 @@ size_flags_horizontal = 0
 size_flags_vertical = 8
 value = 36.34
 show_percentage = false
-
-[node name="Ammunition" type="HBoxContainer" parent="MarginContainer/Content/BottomSection"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="AmmoCount" type="Label" parent="MarginContainer/Content/BottomSection/Ammunition"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(6.31, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-text = "10/10"
