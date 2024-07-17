@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://buap45ve521ia"]
 
-[ext_resource type="Script" path="res://scripts/hero/bullet.gd" id="1_1bdwk"]
+[ext_resource type="Script" path="res://scripts/weapon_and_bullet/bullet.gd" id="1_1bdwk"]
 [ext_resource type="Texture2D" uid="uid://ctiggokrrfb3p" path="res://assets/sprites/hero/hero_bullet.png" id="2_5gngv"]
 [ext_resource type="Texture2D" uid="uid://bugvcyx1gdun4" path="res://assets/sprites/hero/explosion.png" id="2_236ir"]
 
