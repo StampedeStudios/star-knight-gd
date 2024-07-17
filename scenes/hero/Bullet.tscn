@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://ctiggokrrfb3p" path="res://assets/sprites/hero/hero_bullet.png" id="2_5gngv"]
 [ext_resource type="Texture2D" uid="uid://bugvcyx1gdun4" path="res://assets/sprites/hero/explosion.png" id="2_236ir"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cm6s"]
-radius = 4.0
-height = 18.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ww0f"]
+radius = 7.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fr8am"]
 atlas = ExtResource("2_236ir")
@@ -59,16 +58,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="HeroBullet" type="Area2D"]
+[node name="HeroBullet" type="Area2D" node_paths=PackedStringArray("animated_sprite_2d")]
 collision_layer = 4
 script = ExtResource("1_1bdwk")
+animated_sprite_2d = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_7cm6s")
+shape = SubResource("CircleShape2D_8ww0f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.7, 0.7)
 sprite_frames = SubResource("SpriteFrames_lu43x")
 animation = &"moving"
 metadata/_edit_lock_ = true
