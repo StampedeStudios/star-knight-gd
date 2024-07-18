@@ -21,3 +21,5 @@ enum GameEvent {
 enum EnemyType {
 	SHIP,
 }
+
+enum Position { TOP, LEFT, RIGHT }
