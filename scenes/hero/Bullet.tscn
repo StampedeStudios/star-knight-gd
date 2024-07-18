@@ -60,6 +60,7 @@ animations = [{
 
 [node name="HeroBullet" type="Area2D" node_paths=PackedStringArray("animated_sprite_2d")]
 collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_1bdwk")
 animated_sprite_2d = NodePath("AnimatedSprite2D")
 metadata/_edit_lock_ = true
