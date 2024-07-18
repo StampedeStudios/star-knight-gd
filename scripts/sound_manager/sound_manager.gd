@@ -1,7 +1,7 @@
 extends Node
 ## The [code]Sound Manager[/code] is the handler of the all sound effects and background music.
 
-## Handles constants playing of music in a loop without interrupting whenever a new level is loaded.
+## Handles constants playing of music in a loop without interruptions.
 @onready var music_player = $MusicPlayer
 
 ## Number of AudioStreamPlayer that will be created as starting pool to execute Sound effects.

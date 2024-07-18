@@ -45,3 +45,10 @@ class EnemyGun:
 	const AMMO_DAMAGE := "ammo_damage"
 	const AMMO_SPEED := "ammo_speed"
 	const AMMO_BURST := "ammo_burst"
+
+
+## Information on enemy waves
+class Waves:
+	const FORMATIONS := "formations"
+	const STEPS := "steps"
+	const ODDS := "odds"

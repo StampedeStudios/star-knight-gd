@@ -3,9 +3,13 @@ extends Node
 var enemy_data = {}
 var enemy_data_path = "res://assets/json_data/json_enemy_data.json"
 
+var wave_data = {}
+var wave_data_path = "res://assets/json_data/json_wave_data.json"
+
 
 func _ready():
 	enemy_data = load_json_file(enemy_data_path)
+	wave_data = load_json_file(wave_data_path)
 
 
 func load_json_file(file_path: String):
