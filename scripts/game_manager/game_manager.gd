@@ -5,6 +5,6 @@ extends Node
 
 
 func _ready():
-	# TODO: load saved data to fetch reached level index
+	# TODO: load saved data to fetch reached wave index
 	print("[Game Manager] - Starting game...")
 	SceneManager.init(0)

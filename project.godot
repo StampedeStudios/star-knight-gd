@@ -37,7 +37,6 @@ project/assembly_name="Star Knight"
 
 folder_colors={
 "res://assets/": "red",
-"res://levels/": "green",
 "res://scenes/": "orange",
 "res://scripts/": "blue",
 "res://shaders/": "pink"
@@ -106,4 +105,5 @@ reload={
 2d_physics/layer_1="Enemy"
 2d_physics/layer_2="Enemy Bullets"
 2d_physics/layer_3="Hero Bullets"
+2d_physics/layer_4="Borders"
 2d_physics/layer_10="Hero"
