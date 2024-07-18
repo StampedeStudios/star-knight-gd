@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1x027mn21usp"]
+[gd_scene load_steps=7 format=3 uid="uid://deqkf4yego5jp"]
 
 [ext_resource type="Script" path="res://scripts/levels/viewport_limit.gd" id="1_r3fu6"]
 
@@ -28,6 +28,8 @@ top = NodePath("Border/Right")
 bottom = NodePath("Border/Bottom")
 
 [node name="AreaLimit" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 7
 monitorable = false
 
 [node name="Area" type="CollisionShape2D" parent="AreaLimit"]
@@ -35,7 +37,7 @@ position = Vector2(410, 720)
 shape = SubResource("RectangleShape2D_n7ios")
 
 [node name="Border" type="StaticBody2D" parent="."]
-collision_layer = 512
+collision_layer = 8
 collision_mask = 512
 
 [node name="Left" type="CollisionShape2D" parent="Border"]
@@ -50,4 +52,5 @@ shape = SubResource("SegmentShape2D_1t6ap")
 [node name="Bottom" type="CollisionShape2D" parent="Border"]
 shape = SubResource("SegmentShape2D_gr468")
 
+[connection signal="area_entered" from="AreaLimit" to="." method="_on_area_limit_area_entered"]
 [connection signal="area_exited" from="AreaLimit" to="." method="_on_area_limit_area_exited"]

@@ -27,7 +27,7 @@ func _on_menu_control_triggered(event: Enums.MenuEvent):
 	match event:
 		Enums.MenuEvent.START_BTN_PRESSED:
 			SoundManager.play_sound_effect(BTN_SFX)
-			SceneManager.load_next_level()
+			SceneManager.start_waves()
 			hide_all()
 			pass
 		Enums.MenuEvent.CONTINUE_BTN_PRESSED:
