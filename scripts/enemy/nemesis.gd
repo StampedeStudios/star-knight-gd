@@ -26,8 +26,7 @@ func _start_wave(index: int):
 	# Pick random formation with given odds
 	var steps = select_random_formation()
 	# Select spawn area from center, left and right
-	var position: Enums.Position = Enums.Position.TOP
-	# randi_range(0, 2) as Enums.Position
+	var position: Enums.Position = randi_range(0, 2) as Enums.Position
 	# Spawn an enemy in each position indicated by the array index
 
 	print("[Nemesis] Wave %s spawning in position [%s]" % [index + 1, position])
@@ -39,16 +38,19 @@ func _start_wave(index: int):
 ## Handles the spawn of enemies.
 func _spawn_enemies(steps, spawn_side: Enums.Position):
 	var fleet: Fleet = FLEET.instantiate()
-
 	var viewport = get_viewport().size
+	var fleet_starting_position_y = viewport.y / NUM_SPAWN_ROWS / 2
+	var fleet_starting_position_x = viewport.x / 2
 
 	match spawn_side:
 		Enums.Position.TOP:
-			fleet.position = Vector2(0, -viewport.y / NUM_SPAWN_ROWS)
+			fleet.position = Vector2(fleet_starting_position_x, -fleet_starting_position_y)
 		Enums.Position.LEFT:
-			fleet.position = Vector2(-viewport.x, 0)
+			fleet.position = Vector2(-fleet_starting_position_x, fleet_starting_position_y)
 		Enums.Position.RIGHT:
-			fleet.position = Vector2(viewport.x, 0)
+			fleet.position = Vector2(
+				viewport.x + fleet_starting_position_x, fleet_starting_position_y
+			)
 
 	add_child(fleet)
 	fleet.init(steps)
