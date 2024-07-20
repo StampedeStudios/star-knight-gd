@@ -3,7 +3,9 @@
 [ext_resource type="Script" path="res://scripts/weapon_and_bullet/bullet.gd" id="1_8x0wu"]
 [ext_resource type="Texture2D" uid="uid://1r0rnvwph0dg" path="res://assets/sprites/enemies/enemy_bullet.png" id="2_e651m"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gx8lg"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8efg2"]
+radius = 8.0
+height = 35.0
 
 [node name="EnemyBullet" type="Area2D"]
 collision_layer = 2
@@ -17,7 +19,7 @@ texture = ExtResource("2_e651m")
 flip_v = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_gx8lg")
+shape = SubResource("CapsuleShape2D_8efg2")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
