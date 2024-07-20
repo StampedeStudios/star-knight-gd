@@ -50,5 +50,5 @@ class EnemyGun:
 ## Information on enemy waves
 class Waves:
 	const FORMATIONS := "formations"
-	const STEPS := "steps"
+	const UNITS := "units"
 	const ODDS := "odds"

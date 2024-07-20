@@ -19,9 +19,8 @@ func clean_restart():
 
 ## Setup wave to start spawning enemies.
 func _start_wave(index: int):
-	# TODO: decomment
-	# const START_DELAY: int = 3
-	# await get_tree().create_timer(START_DELAY, false).timeout
+	const START_DELAY: int = 3
+	await get_tree().create_timer(START_DELAY, false).timeout
 
 	# Pick random formation with given odds
 	var steps = select_random_formation()
@@ -70,7 +69,7 @@ func select_random_formation():
 	for formation in formations:
 		sum += formation[Literals.Waves.ODDS]
 		if choice <= sum:
-			return formation[Literals.Waves.STEPS]
+			return formation[Literals.Waves.UNITS]
 
 	push_error("No waves select, the total odds does not adds up to 100%")
 	return []

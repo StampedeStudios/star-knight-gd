@@ -1,4 +1,5 @@
 extends Area2D
+class_name Enemy
 
 @export var enemy_type: Enums.EnemyType = Enums.EnemyType.SHIP
 @onready var animated_sprite_2d = $AnimatedSprite2D
@@ -7,6 +8,7 @@ extends Area2D
 const ENEMY_REWARD: PackedScene = preload("res://scenes/enemy/Rewards.tscn")
 const BULLET: PackedScene = preload("res://scenes/enemy/EnemyBullet.tscn")
 const ENEMY_SHOOT_SFX = preload("res://assets/audio/enemy_shoot.wav")
+const MIN_DISTANCE = 5
 
 
 class Animations:
@@ -23,13 +25,12 @@ var _can_shoot: bool = true
 var _burst: int
 var _rate: float
 var _ammo_count: int
+var is_movement_enabled = false
 
-var direction: Vector2 = Vector2.DOWN
-
-
-func init(steps: Array):
-	print(steps)
-	pass
+var _direction: Vector2 = Vector2.DOWN
+var steps: Array
+var _target_position: Vector2
+var _last_reached_position: int
 
 
 func _ready():
@@ -40,19 +41,36 @@ func _ready():
 	_burst = _enemy_stats[Literals.EnemyStats.GUN][Literals.EnemyGun.AMMO_BURST]
 	_rate = 60 / _enemy_stats[Literals.EnemyStats.GUN][Literals.EnemyGun.FIRE_RATE]
 	_ammo_count = _burst
+	_last_reached_position = 0
+	_calculate_target_position()
 
 
-func _physics_process(_delta):
-	# position += Vector2.DOWN * 35 * delta
-	if _can_shoot:
-		var space_state = get_world_2d().direct_space_state
-		var start = self.global_position
-		var end = start + Vector2.DOWN * 1000
-		var query = PhysicsRayQueryParameters2D.create(start, end)
-		var result = space_state.intersect_ray(query)
+func _process(delta):
+	if is_movement_enabled:
+		if position.distance_to(_target_position) > MIN_DISTANCE:
+			position += _direction * _velocity * delta
+		else:
+			_calculate_target_position()
 
-		if result and result.collider is Hero:
-			_shoot()
+		if _can_shoot:
+			var space_state = get_world_2d().direct_space_state
+			var start = self.global_position
+			var end = start + Vector2.DOWN * 1000
+			var query = PhysicsRayQueryParameters2D.create(start, end)
+			var result = space_state.intersect_ray(query)
+
+			if result and result.collider is Hero:
+				_shoot()
+
+
+func _calculate_target_position():
+	if _last_reached_position == steps.size() - 1:
+		_last_reached_position = 0
+	else:
+		_last_reached_position += 1
+
+	_target_position = steps[_last_reached_position]
+	_direction = (_target_position - position).normalized()
 
 
 func get_hurt(damage: int):
