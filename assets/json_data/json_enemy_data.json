@@ -2,7 +2,7 @@
   "SHIP": {
     "max_health": 100,
     "impact_damage": 20,
-    "speed": 35,
+    "speed": 60,
     "gun": {
       "fire_rate": 60,
       "ammo_burst": 0,
