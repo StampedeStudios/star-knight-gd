@@ -84,3 +84,4 @@ func clean_scene():
 func restart():
 	clean_scene()
 	reached_wave = 0
+	start_waves()
