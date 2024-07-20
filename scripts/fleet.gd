@@ -29,16 +29,16 @@ func init(steps):
 
 
 func _physics_process(delta):
-	position += Vector2.DOWN * 35 * delta
+	position += Vector2.DOWN * 60 * delta
 
 
 func get_ship_position(piece_index: int) -> Vector2:
 	var slot_size := Vector2(long_side / NUM_SPAWN_COLUMNS, short_side / NUM_SPAWN_ROWS)
 
 	# Piece position coordinates
-	var side_x := slot_size.x * (piece_index % NUM_SPAWN_COLUMNS)
-	var side_y := slot_size.y * int(piece_index / float(NUM_SPAWN_COLUMNS))
+	var side_x: float = slot_size.x * (piece_index % NUM_SPAWN_COLUMNS)
+	var side_y: float = slot_size.y * int(piece_index / float(NUM_SPAWN_COLUMNS))
 
-	var pos_x := side_x + slot_size.x / 2
-	var pos_y := side_y + slot_size.y / 2
+	var pos_x: float = side_x + slot_size.x / 2
+	var pos_y: float = side_y + slot_size.y / 2
 	return Vector2(pos_x, pos_y)

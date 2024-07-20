@@ -42,14 +42,15 @@ func _ready():
 	_ammo_count = _burst
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# position += Vector2.DOWN * 35 * delta
 	if _can_shoot:
 		var space_state = get_world_2d().direct_space_state
-		var start = self.position
+		var start = self.global_position
 		var end = start + Vector2.DOWN * 1000
 		var query = PhysicsRayQueryParameters2D.create(start, end)
 		var result = space_state.intersect_ray(query)
+
 		if result and result.collider is Hero:
 			_shoot()
 
@@ -62,10 +63,7 @@ func get_hurt(damage: int):
 
 func _on_enemy_death():
 	collision_shape_2d.set_deferred("disabled", true)
-	var reward = ENEMY_REWARD.instantiate()
-	reward.position = position
-	reward.init_reward(Enums.EnemyType.keys()[enemy_type])
-	call_deferred("add_child", reward)
+	call_deferred("_spawn_reward")
 	SceneManager.on_enemy_death()
 	collision_shape_2d.set_deferred("disabled", true)
 	animated_sprite_2d.play(Animations.DEATH)
@@ -102,3 +100,10 @@ func _shoot():
 		await get_tree().create_timer(_rate, false).timeout
 
 	_can_shoot = true
+
+
+func _spawn_reward():
+	var reward = ENEMY_REWARD.instantiate()
+	get_parent().add_child(reward)
+	reward.position = position
+	reward.init_reward(Enums.EnemyType.keys()[enemy_type])

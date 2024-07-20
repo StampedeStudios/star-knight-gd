@@ -106,4 +106,5 @@ reload={
 2d_physics/layer_2="Enemy Bullets"
 2d_physics/layer_3="Hero Bullets"
 2d_physics/layer_4="Borders"
+2d_physics/layer_5="Rewards"
 2d_physics/layer_10="Hero"
