@@ -54,7 +54,7 @@ func _spawn_enemies(steps, spawn_side: Enums.Position):
 	add_child(fleet)
 	fleet.init(steps)
 
-	const START_DELAY: int = 15
+	const START_DELAY: int = 8
 	await get_tree().create_timer(START_DELAY, false).timeout
 
 

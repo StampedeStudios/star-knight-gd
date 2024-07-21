@@ -29,7 +29,7 @@ bottom = NodePath("Border/Bottom")
 
 [node name="AreaLimit" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 7
+collision_mask = 23
 monitorable = false
 
 [node name="Area" type="CollisionShape2D" parent="AreaLimit"]

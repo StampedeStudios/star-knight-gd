@@ -85,3 +85,7 @@ func restart():
 	clean_scene()
 	reached_wave = 0
 	start_waves()
+
+
+func get_hero() -> Hero:
+	return hero_instance
