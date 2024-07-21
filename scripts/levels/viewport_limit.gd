@@ -9,6 +9,7 @@ extends Node
 
 func _ready():
 	get_viewport().size_changed.connect(_on_viewport_change)
+	_on_viewport_change()
 
 
 func _on_viewport_change():

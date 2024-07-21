@@ -31,7 +31,7 @@ ViewportLimit="*res://scenes/ViewportLimit.tscn"
 [display]
 
 window/size/viewport_width=820
-window/size/viewport_height=1440
+window/size/viewport_height=1280
 
 [dotnet]
 
