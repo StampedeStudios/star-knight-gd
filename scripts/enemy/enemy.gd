@@ -21,16 +21,18 @@ signal death(enemy_name: String, enemy_pos: Vector2)
 var _enemy_stats = StaticData.enemy_data[Enums.EnemyType.keys()[enemy_type]]
 var _health: int
 var _velocity: int
-var _can_shoot: bool = true
 var _burst: int
 var _rate: float
 var _ammo_count: int
-var is_movement_enabled = false
+var _can_shoot: bool = false
+var _is_movement_enabled: bool = false
 
 var _direction: Vector2 = Vector2.DOWN
 var steps: Array
 var _target_position: Vector2
 var _last_reached_position: int
+
+var hero: Hero
 
 
 func _ready():
@@ -44,23 +46,28 @@ func _ready():
 	_last_reached_position = 0
 	_calculate_target_position()
 
+	hero = SceneManager.get_hero()
+
 
 func _process(delta):
-	if is_movement_enabled:
+	if _is_movement_enabled:
+		if hero:
+			look_at(hero.position)
+			rotation_degrees += 90
 		if position.distance_to(_target_position) > MIN_DISTANCE:
 			position += _direction * _velocity * delta
 		else:
 			_calculate_target_position()
 
-		if _can_shoot:
-			var space_state = get_world_2d().direct_space_state
-			var start = self.global_position
-			var end = start + Vector2.DOWN * 1000
-			var query = PhysicsRayQueryParameters2D.create(start, end)
-			var result = space_state.intersect_ray(query)
+	if _can_shoot:
+		var space_state = get_world_2d().direct_space_state
+		var start = self.global_position
+		var end = hero.position
+		var query = PhysicsRayQueryParameters2D.create(start, end)
+		var result = space_state.intersect_ray(query)
 
-			if result and result.collider is Hero:
-				_shoot()
+		if result and result.collider is Hero:
+			_shoot()
 
 
 func _calculate_target_position():
@@ -68,6 +75,11 @@ func _calculate_target_position():
 		_last_reached_position = 0
 	else:
 		_last_reached_position += 1
+
+	if _is_movement_enabled and steps[_last_reached_position] == _target_position:
+		_is_movement_enabled = false
+		await get_tree().create_timer(0.5, false).timeout
+		_is_movement_enabled = true
 
 	_target_position = steps[_last_reached_position]
 	_direction = (_target_position - position).normalized()
@@ -110,10 +122,12 @@ func _shoot():
 	if _burst > 0:
 		_ammo_count -= 1
 		if _ammo_count > 0:
-			await get_tree().create_timer(_rate, false).timeout
+			await get_tree().create_timer(0.1, false).timeout
+			_shoot()
+			return
 		else:
 			_ammo_count = _burst
-			await get_tree().create_timer(_rate * _burst, false).timeout
+			await get_tree().create_timer(_rate, false).timeout
 	else:
 		await get_tree().create_timer(_rate, false).timeout
 
@@ -125,3 +139,8 @@ func _spawn_reward():
 	get_parent().add_child(reward)
 	reward.position = position
 	reward.init_reward(Enums.EnemyType.keys()[enemy_type])
+
+
+func enable():
+	_is_movement_enabled = true
+	_can_shoot = true

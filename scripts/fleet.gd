@@ -62,7 +62,7 @@ func _get_ship_position(piece_index: int) -> Vector2:
 func _enable_ships_movement():
 	for child in get_children():
 		if child is Enemy:
-			child.is_movement_enabled = true
+			child.enable()
 
 
 func _get_ship_step_positions(enemy_steps: Array) -> Array:

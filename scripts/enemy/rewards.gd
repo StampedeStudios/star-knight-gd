@@ -24,6 +24,10 @@ func init_reward(enemy_name: String):
 		push_error("'%s' not found in JSON" % [enemy_name])
 
 
+func _process(delta):
+	position += Vector2.DOWN * 150 * delta
+
+
 func _on_body_entered(body):
 	if body is Hero:
 		match reward_choiced:
