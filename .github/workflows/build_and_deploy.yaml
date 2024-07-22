@@ -28,4 +28,4 @@ jobs:
           itch_user: stampede-studios 
           itch_game: star-knight 
           version: ${{ github.ref_name }}
-          files: "${{ steps.export.outputs.archive_directory }}/-web.zip"
+          files: "${{ steps.export.outputs.archive_directory }}/star-knigth-web.zip"
