@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Star Knight"
-config/version="0.1.0s"
+config/version="0.1.0"
 run/main_scene="res://scenes/Game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/fullsize=false
-config/icon="res://assets/game/sn_icon.png"
-config/macos_native_icon="res://assets/game/sn_icon.icns"
-config/windows_native_icon="res://assets/game/sn_icon.ico"
+config/icon="res://assets/game/logo.png"
+config/macos_native_icon="res://assets/game/logo.icns"
+config/windows_native_icon="res://assets/game/logo.ico"
 
 [autoload]
 
