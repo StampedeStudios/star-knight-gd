@@ -2,9 +2,10 @@ name: Static checks
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  # workflow_dispatch:
 
 jobs:
   static-checks:
@@ -13,5 +14,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: Scony/godot-gdscript-toolkit@master
-    - run: gdformat --check source/
-    - run: gdlint source/
+    - run: gdformat --check .
+    - run: gdlint .
