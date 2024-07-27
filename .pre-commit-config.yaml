@@ -4,21 +4,21 @@ repos:
     hooks:
       - id: trailing-whitespace
         name: Trailing spaces check
-        description: This hook trims trailing whitespace.
+        description: Trims trailing whitespace.
 
       - id: end-of-file-fixer
         name: EOF character check
-        description: This hook fixes EOF character.
+        description: Fixes EOF character.
 
       - id: check-yaml
         name: Yaml format check
-        description: This hook enforce yaml files format.
+        description: Enforce yaml files format.
 
   - repo: local
     hooks:
       - id: gdformat
         name: Gdscript format check
-        description: This hook enforce gdscript files format.
+        description: Enforce gdscript files format.
         entry: gdformat
         language: system
         types: [file]
@@ -26,7 +26,7 @@ repos:
 
       - id: conventional-commit
         name: Enforcing conventional commit
-        description: This hook check commit message to enforce conventional commit messages.
+        description: Checks commit message to enforce conventional commit messages.
         entry: .githooks/commit-msg-check
         language: script
         stages: [commit-msg]
