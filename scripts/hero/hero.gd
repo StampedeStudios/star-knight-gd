@@ -25,7 +25,7 @@ var input: Vector2 = Vector2.ZERO
 var can_shoot: bool = true
 var health: int = max_health
 
-var timer : Timer
+var timer: Timer
 
 
 class Animations:
