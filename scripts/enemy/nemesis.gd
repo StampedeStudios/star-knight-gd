@@ -9,21 +9,21 @@ const NUM_SPAWN_ROWS := 3
 
 var waves: Array
 
-var formations = StaticData.wave_data[Literals.Waves.FORMATIONS]
+var formations: Array = StaticData.wave_data[Literals.Waves.FORMATIONS]
 
 
-func clean_restart():
+func clean_restart() -> void:
 	# Starting to spawn enemies
 	_start_wave(0)
 
 
 ## Setup wave to start spawning enemies.
-func _start_wave(index: int):
+func _start_wave(index: int) -> void:
 	const START_DELAY: int = 3
 	await get_tree().create_timer(START_DELAY, false).timeout
 
 	# Pick random formation with given odds
-	var steps = select_random_formation()
+	var steps: Dictionary = select_random_formation()
 	# Select spawn area from center, left and right
 	var position: Enums.Position = randi_range(0, 2) as Enums.Position
 	# Spawn an enemy in each position indicated by the array index
@@ -35,11 +35,11 @@ func _start_wave(index: int):
 
 
 ## Handles the spawn of enemies.
-func _spawn_enemies(steps, spawn_side: Enums.Position):
+func _spawn_enemies(steps: Dictionary, spawn_side: Enums.Position) -> void:
 	var fleet: Fleet = FLEET.instantiate()
-	var viewport = get_viewport().size
-	var fleet_starting_position_y = viewport.y / NUM_SPAWN_ROWS / 2
-	var fleet_starting_position_x = viewport.x / 2
+	var viewport: Vector2 = get_viewport().size
+	var fleet_starting_position_y: float = viewport.y / NUM_SPAWN_ROWS / 2
+	var fleet_starting_position_x: float = viewport.x / 2
 
 	match spawn_side:
 		Enums.Position.TOP:
@@ -58,18 +58,18 @@ func _spawn_enemies(steps, spawn_side: Enums.Position):
 	await get_tree().create_timer(START_DELAY, false).timeout
 
 
-func reset():
+func reset() -> void:
 	for child in get_children():
 		child.queue_free()
 
 
-func select_random_formation():
-	var choice = randf_range(0, 1)
+func select_random_formation() -> Dictionary:
+	var choice: float = randf_range(0, 1)
 	var sum: float = 0
-	for formation in formations:
+	for formation: Dictionary in formations:
 		sum += formation[Literals.Waves.ODDS]
 		if choice <= sum:
 			return formation[Literals.Waves.UNITS]
 
 	push_error("No waves select, the total odds does not adds up to 100%")
-	return []
+	return {}

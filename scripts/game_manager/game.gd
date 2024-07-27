@@ -1,10 +1,10 @@
 extends Node2D
 
-@onready var texture_rect = $TextureRect
+var time: float = 0
 
-var time = 0
+@onready var texture_rect := $TextureRect
 
 
-func _process(delta):
+func _process(delta: float) -> void:
 	time += delta
 	texture_rect.material.set_shader_parameter("time", time)

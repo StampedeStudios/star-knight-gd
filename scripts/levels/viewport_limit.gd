@@ -7,20 +7,20 @@ extends Node
 @export var bottom: CollisionShape2D
 
 
-func _ready():
+func _ready() -> void:
 	get_viewport().size_changed.connect(_on_viewport_change)
 	_on_viewport_change()
 
 
-func _on_viewport_change():
-	var pos = get_viewport().size
+func _on_viewport_change() -> void:
+	var pos: Vector2 = get_viewport().size
 	area_limit.position = pos / 2
 	area_limit.scale = pos
 
-	var top_left = Vector2.ZERO
-	var top_right = Vector2(pos.x, 0)
-	var bottom_left = Vector2(0, pos.y)
-	var bottom_right = pos
+	var top_left := Vector2.ZERO
+	var top_right := Vector2(pos.x, 0)
+	var bottom_left := Vector2(0, pos.y)
+	var bottom_right: Vector2 = pos
 	left.shape.a = top_left
 	left.shape.b = bottom_left
 	right.shape.a = top_right
@@ -31,5 +31,5 @@ func _on_viewport_change():
 	bottom.shape.b = bottom_right
 
 
-func _on_area_limit_area_exited(area):
+func _on_area_limit_area_exited(area: Area2D) -> void:
 	area.queue_free()

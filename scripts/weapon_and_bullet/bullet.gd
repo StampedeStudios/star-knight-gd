@@ -4,10 +4,10 @@ extends Area2D
 ## Basic bullet entity, part of the basic hero weapons.
 
 ## Bullet velocity
-@export var _velocity = 2000
+@export var _velocity: int = 2000
 
 ## Bullet damage to entities
-@export var damage = 51
+@export var damage: int = 51
 
 ## Animated Sprite Node Reference
 @export var animated_sprite_2d: AnimatedSprite2D
@@ -18,31 +18,31 @@ class Animations:
 	const HIT := "hit"
 
 
-var rng = RandomNumberGenerator.new()
+var rng := RandomNumberGenerator.new()
 var random_explosion_rotation: float
 var random_explosion_position_x: float
 var random_explosion_position_y: float
 var random_position_treshold: float = 10.0
 
 
-func _ready():
+func _ready() -> void:
 	if animated_sprite_2d:
 		animated_sprite_2d.animation = Animations.MOVING
 		animated_sprite_2d.play()
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	position += -self.transform.y * _velocity * delta
 
 
-func _on_area_entered(area):
+func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("get_hurt"):
 		area.get_hurt(damage)
 
 	call_deferred("_remove_bullet")
 
 
-func _randomize_bullet_sprite():
+func _randomize_bullet_sprite() -> void:
 	random_explosion_rotation = rng.randf_range(0, 2 * PI)
 	random_explosion_position_x = rng.randf_range(
 		-random_position_treshold, random_position_treshold
@@ -56,23 +56,23 @@ func _randomize_bullet_sprite():
 	)
 
 
-func _on_body_entered(body):
+func _on_body_entered(body: Node) -> void:
 	if body.has_method("get_hurt"):
 		body.get_hurt(damage)
 
 	call_deferred("_remove_bullet")
 
 
-func _remove_bullet():
+func _remove_bullet() -> void:
 	if animated_sprite_2d:
 		$CollisionShape2D.disabled = true
 		_randomize_bullet_sprite()
 		animated_sprite_2d.animation = Animations.HIT
-		_velocity = Vector2.ZERO
+		_velocity = 0
 	else:
 		queue_free()
 
 
-func _on_animated_sprite_2d_animation_finished():
+func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == Animations.HIT:
 		queue_free()

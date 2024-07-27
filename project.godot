@@ -28,6 +28,10 @@ GameManager="*res://scripts/game_manager/game_manager.gd"
 StaticData="*res://scripts/static_data.gd"
 ViewportLimit="*res://scenes/ViewportLimit.tscn"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=820
