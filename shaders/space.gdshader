@@ -93,6 +93,7 @@ float intersectPlanets(vec3 pos, vec3 dir, out vec3 normal, out float maxDistanc
         }
         maxDistance = max(maxDistance, D);
     }
+
     return hit ? best_dist : -1.0;
 }
 
