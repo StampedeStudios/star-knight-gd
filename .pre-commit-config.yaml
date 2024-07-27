@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v1.2.3
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+
+  - repo: local
+    hooks:
+      - id: gdformat
+        name: gdformat
+        entry: gdformat
+        language: system
+        types: [file]
+        files: '\.gd$'
+
+      - id: commitlint
+        name: commitlint
+        entry: npx
+        args: ['commitlint', '--edit', '$GIT_PARAMS']
+        language: system
+        stages: [commit-msg]
