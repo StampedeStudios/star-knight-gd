@@ -1,7 +1,7 @@
 class_name Enums
 ## Defines all constant enums used by the entire codebase.
 
-## All Menu and sub-menu events triggered which require to be handled by the [code]User Interface[/code].
+## All Menu and sub-menu events triggered which require to be handled by the User Interface.
 enum MenuEvent {
 	START_BTN_PRESSED,
 	CONTINUE_BTN_PRESSED,

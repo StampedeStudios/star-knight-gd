@@ -1,39 +1,36 @@
-extends Area2D
 class_name Fleet
+extends Area2D
 
-const ENEMY_SHIP: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
-
+const EnemyShip: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
 const NUM_SPAWN_COLUMNS := 5
 const NUM_SPAWN_ROWS := 3
 const MIN_DISTANCE = 5
 
-var _enemy_stats = StaticData.enemy_data[Enums.EnemyType.keys()[Enums.EnemyType.SHIP]]
-
-var slot_size: Vector2
-var patrol_area_position: Vector2
-var long_side
-var short_side
-
-var _velocity
-var direction
+var _enemy_stats: Dictionary = StaticData.enemy_data[Enums.EnemyType.keys()[Enums.EnemyType.SHIP]]
+var _slot_size: Vector2
+var _patrol_area_position: Vector2
+var _long_side: float
+var _short_side: float
+var _velocity: float
+var _direction: Vector2
 
 
-func _ready():
-	var viewport = get_viewport().size
-	long_side = viewport.x
-	short_side = viewport.y / NUM_SPAWN_ROWS
-	slot_size = Vector2(long_side / NUM_SPAWN_COLUMNS, short_side / NUM_SPAWN_ROWS)
-	patrol_area_position = Vector2(viewport.x / 2, short_side / 2)
+func _ready() -> void:
+	var viewport: Vector2 = get_viewport().size
+	_long_side = viewport.x
+	_short_side = viewport.y / NUM_SPAWN_ROWS
+	_slot_size = Vector2(_long_side / NUM_SPAWN_COLUMNS, _short_side / NUM_SPAWN_ROWS)
+	_patrol_area_position = Vector2(viewport.x / 2, _short_side / 2)
 
 	_velocity = _enemy_stats[Literals.EnemyStats.SPEED]
-	direction = (patrol_area_position - position).normalized()
+	_direction = (_patrol_area_position - position).normalized()
 
 
-func init(units):
+func init(units: Dictionary) -> void:
 	print("[Fleet] - Initializing %d units in the fleet" % units.size())
 	for index in range(0, units.size()):
-		var enemy = ENEMY_SHIP.instantiate()
-		var enemy_steps = units[String.num(index)]
+		var enemy := EnemyShip.instantiate()
+		var enemy_steps: Array = units[String.num(index)]
 
 		enemy.position = _get_ship_position(enemy_steps[0])
 		enemy.steps = _get_ship_step_positions(enemy_steps)
@@ -41,9 +38,9 @@ func init(units):
 		add_child(enemy)
 
 
-func _process(delta):
-	if position.distance_to(patrol_area_position) > MIN_DISTANCE:
-		position += direction * _velocity * delta
+func _process(delta: float) -> void:
+	if position.distance_to(_patrol_area_position) > MIN_DISTANCE:
+		position += _direction * _velocity * delta
 	else:
 		set_process(false)
 		_enable_ships_movement()
@@ -51,15 +48,15 @@ func _process(delta):
 
 func _get_ship_position(piece_index: int) -> Vector2:
 	# Piece position coordinates
-	var side_x: float = slot_size.x * (piece_index % NUM_SPAWN_COLUMNS) - long_side / 2
-	var side_y: float = slot_size.y * int(piece_index / float(NUM_SPAWN_COLUMNS)) - short_side / 2
+	var side_x: float = _slot_size.x * (piece_index % NUM_SPAWN_COLUMNS) - _long_side / 2
+	var side_y: float = _slot_size.y * int(piece_index / float(NUM_SPAWN_COLUMNS)) - _short_side / 2
 
-	var pos_x: float = side_x + slot_size.x / 2
-	var pos_y: float = side_y + slot_size.y / 2
+	var pos_x: float = side_x + _slot_size.x / 2
+	var pos_y: float = side_y + _slot_size.y / 2
 	return Vector2(pos_x, pos_y)
 
 
-func _enable_ships_movement():
+func _enable_ships_movement() -> void:
 	for child in get_children():
 		if child is Enemy:
 			child.enable()
@@ -68,7 +65,7 @@ func _enable_ships_movement():
 func _get_ship_step_positions(enemy_steps: Array) -> Array:
 	var positions := Array()
 
-	for step in enemy_steps:
+	for step: int in enemy_steps:
 		positions.append(_get_ship_position(step))
 
 	return positions
