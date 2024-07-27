@@ -12,18 +12,12 @@ fi
 # Read the commit message from the file
 COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
 
-# Optional: Output the commit message for debugging (remove or comment out in production)
-echo "Commit message: $COMMIT_MSG"
-
 # Conventional Commit Regex Pattern
 PATTERN="^(feat|fix|docs|style|refactor|test|chore|perf|build|ci|revert|wip)(\([^\)]+\))?: .{1,100}"
 
 # Validate the commit message
 if [[ ! $COMMIT_MSG =~ $PATTERN ]]; then
-  echo "Error: Commit message does not follow the Conventional Commit format."
-  echo "Expected format: <type>(<scope>): <description>"
-  echo "Allowed types: feat, fix, docs, style, refactor, test, chore, perf, build, ci, revert, wip"
-  echo "Example: feat(parser): add ability to parse arrays"
+  echo "Error: Commit message does not follow the Conventional Commit standard (https://github.com/StampedeStudios/stampede-documentation/blob/main/handbook/conventional-commit_EN.md)"
   exit 1
 fi
 
