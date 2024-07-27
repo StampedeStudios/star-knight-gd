@@ -19,7 +19,6 @@ func load_json_file(file_path: String):
 
 		if parse is Dictionary:
 			return parse
-		else:
-			push_error("File: %s can't be converted" % [file_path])
+		push_error("File: %s can't be converted" % [file_path])
 	else:
 		push_error("File: %s doesn't exist" % [file_path])
