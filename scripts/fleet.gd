@@ -6,7 +6,6 @@ const NUM_SPAWN_COLUMNS := 5
 const NUM_SPAWN_ROWS := 3
 const MIN_DISTANCE = 5
 
-var _enemy_stats: Dictionary = StaticData.enemy_data[Enums.EnemyType.keys()[Enums.EnemyType.SHIP]]
 var _slot_size: Vector2
 var _patrol_area_position: Vector2
 var _long_side: float
@@ -22,15 +21,15 @@ func _ready() -> void:
 	_slot_size = Vector2(_long_side / NUM_SPAWN_COLUMNS, _short_side / NUM_SPAWN_ROWS)
 	_patrol_area_position = Vector2(viewport.x / 2, _short_side / 2)
 
-	_velocity = _enemy_stats[Literals.EnemyStats.SPEED]
+	_velocity = 400  # TODO: Fix magic number
 	_direction = (_patrol_area_position - position).normalized()
 
 
-func init(units: Dictionary) -> void:
+func init(units: Array[Array]) -> void:
 	print("[Fleet] - Initializing %d units in the fleet" % units.size())
 	for index in range(0, units.size()):
 		var enemy := EnemyShip.instantiate()
-		var enemy_steps: Array = units[String.num(index)]
+		var enemy_steps: Array = units[index]
 
 		enemy.position = _get_ship_position(enemy_steps[0])
 		enemy.steps = _get_ship_step_positions(enemy_steps)

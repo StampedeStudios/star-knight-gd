@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://4ol32obr8e7e"]
+[gd_scene load_steps=6 format=3 uid="uid://4ol32obr8e7e"]
 
 [ext_resource type="Script" path="res://scripts/enemy/nemesis.gd" id="1_okq2f"]
+[ext_resource type="Resource" uid="uid://6ub72es6f10j" path="res://assets/resources/formations/a.tres" id="2_87ps7"]
+[ext_resource type="Resource" uid="uid://cay7ifptrs3y0" path="res://assets/resources/formations/w.tres" id="3_hol1g"]
+[ext_resource type="Resource" uid="uid://bmgvh71or3b52" path="res://assets/resources/formations/x.tres" id="4_2pm8l"]
+[ext_resource type="Resource" uid="uid://be3o5b2vytr62" path="res://assets/resources/formations/flank.tres" id="5_els1e"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_okq2f")
+formations = Array[Resource("res://scripts/enemy/formation.gd")]([ExtResource("2_87ps7"), ExtResource("3_hol1g"), ExtResource("4_2pm8l"), ExtResource("5_els1e")])

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FormationData" load_steps=2 format=3 uid="uid://be3o5b2vytr62"]
+
+[ext_resource type="Script" path="res://scripts/enemy/formation_data.gd" id="1_wpdwh"]
+
+[resource]
+script = ExtResource("1_wpdwh")
+odds = 0.3
+num_ships = 2
+name = "W"
+unit_position = Array[Array]([[10], [14]])

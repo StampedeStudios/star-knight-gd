@@ -3,13 +3,13 @@ extends Node
 ##
 ## Every logic that involve enemy attacks will be handled here.
 
+@export var formations: Array[Formation]
+
 const FLEET: PackedScene = preload("res://scenes/enemy/Fleet.tscn")
 const NUM_SPAWN_COLUMNS := 5
 const NUM_SPAWN_ROWS := 3
 
 var waves: Array
-
-var formations: Array = StaticData.wave_data[Literals.Waves.FORMATIONS]
 
 
 func clean_restart() -> void:
@@ -23,7 +23,7 @@ func _start_wave(index: int) -> void:
 	await get_tree().create_timer(START_DELAY, false).timeout
 
 	# Pick random formation with given odds
-	var steps: Dictionary = select_random_formation()
+	var steps: Array[Array] = select_random_formation()
 	# Select spawn area from center, left and right
 	var position: Enums.Position = randi_range(0, 2) as Enums.Position
 	# Spawn an enemy in each position indicated by the array index
@@ -35,7 +35,7 @@ func _start_wave(index: int) -> void:
 
 
 ## Handles the spawn of enemies.
-func _spawn_enemies(steps: Dictionary, spawn_side: Enums.Position) -> void:
+func _spawn_enemies(steps: Array[Array], spawn_side: Enums.Position) -> void:
 	var fleet: Fleet = FLEET.instantiate()
 	var viewport: Vector2 = get_viewport().size
 	var fleet_starting_position_y: float = viewport.y / NUM_SPAWN_ROWS / 2
@@ -63,13 +63,13 @@ func reset() -> void:
 		child.queue_free()
 
 
-func select_random_formation() -> Dictionary:
+func select_random_formation() -> Array[Array]:
 	var choice: float = randf_range(0, 1)
 	var sum: float = 0
-	for formation: Dictionary in formations:
-		sum += formation[Literals.Waves.ODDS]
+	for formation: Formation in formations:
+		sum += formation.odds
 		if choice <= sum:
-			return formation[Literals.Waves.UNITS]
+			return formation.unit_position
 
 	push_error("No waves select, the total odds does not adds up to 100%")
-	return {}
+	return []
