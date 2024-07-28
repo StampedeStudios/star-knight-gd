@@ -3,13 +3,27 @@ extends Node
 ##
 ## Every logic that involve enemy attacks will be handled here.
 
-const FLEET: PackedScene = preload("res://scenes/enemy/Fleet.tscn")
+const EnemyShip: PackedScene = preload("res://scenes/enemy/Enemy.tscn")
 const NUM_SPAWN_COLUMNS := 5
 const NUM_SPAWN_ROWS := 3
+const MAX_SHIPS_AMOUNT := 8
 
 @export var formations: Array[FormationData]
 
 var waves: Array
+var _num_ships_left: int
+var _long_side: float
+var _short_side: float
+var _slot_size: Vector2
+var _patrol_area_position: Vector2
+
+
+func _ready() -> void:
+	var viewport: Vector2 = get_viewport().size
+	_long_side = viewport.x
+	_short_side = viewport.y / NUM_SPAWN_ROWS
+	_slot_size = Vector2(_long_side / NUM_SPAWN_COLUMNS, _short_side / NUM_SPAWN_ROWS)
+	_patrol_area_position = Vector2(viewport.x / 2, _short_side / 2)
 
 
 func clean_restart() -> void:
@@ -19,42 +33,28 @@ func clean_restart() -> void:
 
 ## Setup wave to start spawning enemies.
 func _start_wave(index: int) -> void:
-	const START_DELAY: int = 3
+	const START_DELAY: int = 1  # TODO: Set dynamic delay
 	await get_tree().create_timer(START_DELAY, false).timeout
 
 	# Pick random formation with given odds
 	var steps: Array[Array] = select_random_formation()
-	# Select spawn area from center, left and right
-	var position: Enums.Position = randi_range(0, 2) as Enums.Position
-	# Spawn an enemy in each position indicated by the array index
 
-	print("[Nemesis] Wave %s spawning in position [%s]" % [index + 1, position])
-	await _spawn_enemies(steps, position)
+	print("[Nemesis] Wave %s spawning" % [index + 1])
+	await _spawn_enemy(steps)
 
 	_start_wave(index + 1)
 
 
 ## Handles the spawn of enemies.
-func _spawn_enemies(steps: Array[Array], spawn_side: Enums.Position) -> void:
-	var fleet: Fleet = FLEET.instantiate()
-	var viewport: Vector2 = get_viewport().size
-	var fleet_starting_position_y: float = viewport.y / NUM_SPAWN_ROWS / 2
-	var fleet_starting_position_x: float = viewport.x / 2
+func _spawn_enemy(steps: Array[Array]) -> void:
+	var enemy := EnemyShip.instantiate()
+	enemy.position = _get_spawn_position()
+	enemy.steps = _get_ship_step_positions(steps[0])
+	enemy.enable()
 
-	match spawn_side:
-		Enums.Position.TOP:
-			fleet.position = Vector2(fleet_starting_position_x, -fleet_starting_position_y)
-		Enums.Position.LEFT:
-			fleet.position = Vector2(-fleet_starting_position_x, fleet_starting_position_y)
-		Enums.Position.RIGHT:
-			fleet.position = Vector2(
-				viewport.x + fleet_starting_position_x, fleet_starting_position_y
-			)
+	add_child(enemy)
 
-	add_child(fleet)
-	fleet.init(steps)
-
-	const START_DELAY: int = 8
+	const START_DELAY: int = 1
 	await get_tree().create_timer(START_DELAY, false).timeout
 
 
@@ -73,3 +73,43 @@ func select_random_formation() -> Array[Array]:
 
 	push_error("No waves select, the total odds does not adds up to 100%")
 	return []
+
+
+func _get_ship_position(piece_index: int) -> Vector2:
+	# Piece position coordinates
+	var side_x: float = _slot_size.x * (piece_index % NUM_SPAWN_COLUMNS)
+	var side_y: float = _slot_size.y * int(piece_index / float(NUM_SPAWN_COLUMNS))
+
+	var pos_x: float = side_x + _slot_size.x / 2
+	var pos_y: float = side_y + _slot_size.y / 2
+	return Vector2(pos_x, pos_y)
+
+
+func _get_ship_step_positions(enemy_steps: Array) -> Array:
+	var positions := Array()
+
+	for step: int in enemy_steps:
+		positions.append(_get_ship_position(step))
+
+	return positions
+
+
+## TODO: Docs
+func _get_spawn_position() -> Vector2:
+	var spawn_pos := Vector2(0, 0)
+	var spawn_perimeter: float = _long_side + _short_side * 2
+
+	# Random point on perimeter
+	var random_point: float = randf_range(0, spawn_perimeter)
+
+	if random_point < _short_side:
+		# The spawning point is on the left side
+		spawn_pos = Vector2(0, random_point - _short_side)
+	elif random_point < _long_side + _short_side:
+		# The spawning point is on the top side
+		spawn_pos = Vector2(random_point - _short_side, 0)
+	else:
+		# The spawning point is on the right side
+		spawn_pos = Vector2(_long_side, -_short_side + random_point - _long_side)
+
+	return spawn_pos
