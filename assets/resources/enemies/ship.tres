@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=3 format=3 uid="uid://bcbhk5k02d0yl"]
+
+[ext_resource type="Script" path="res://scripts/enemy/enemy_data.gd" id="1_5w32d"]
+[ext_resource type="Resource" uid="uid://o4uais5uhoj3" path="res://assets/resources/rewards/health_pack.tres" id="1_d46wi"]
+
+[resource]
+script = ExtResource("1_5w32d")
+max_health = 100
+impact_damage = 20
+speed = 400
+fire_rate = 60
+ammo_burst = 3
+ammo_speed = 100
+ammo_damage = 10
+rewards = Array[Resource("res://scripts/enemy/reward_data.gd")]([ExtResource("1_d46wi")])

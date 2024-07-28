@@ -3,11 +3,11 @@ extends Node
 ##
 ## Every logic that involve enemy attacks will be handled here.
 
-@export var formations: Array[Formation]
-
 const FLEET: PackedScene = preload("res://scenes/enemy/Fleet.tscn")
 const NUM_SPAWN_COLUMNS := 5
 const NUM_SPAWN_ROWS := 3
+
+@export var formations: Array[FormationData]
 
 var waves: Array
 
@@ -66,7 +66,7 @@ func reset() -> void:
 func select_random_formation() -> Array[Array]:
 	var choice: float = randf_range(0, 1)
 	var sum: float = 0
-	for formation: Formation in formations:
+	for formation: FormationData in formations:
 		sum += formation.odds
 		if choice <= sum:
 			return formation.unit_position

@@ -8,4 +8,4 @@
 
 [node name="Node" type="Node"]
 script = ExtResource("1_okq2f")
-formations = Array[Resource("res://scripts/enemy/formation.gd")]([ExtResource("2_87ps7"), ExtResource("3_hol1g"), ExtResource("4_2pm8l"), ExtResource("5_els1e")])
+formations = Array[Resource("res://scripts/enemy/formation_data.gd")]([ExtResource("2_87ps7"), ExtResource("3_hol1g"), ExtResource("4_2pm8l"), ExtResource("5_els1e")])
