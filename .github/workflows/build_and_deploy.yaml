@@ -1,0 +1,31 @@
+name: Build Godot Project
+
+on:
+  push: {}
+
+jobs:
+  Godot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Godot Export 
+        id: export
+        uses: firebelley/godot-export@v5.2.1
+        with:
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.2/Godot_v4.2-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.2/Godot_v4.2-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
+          cache: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+      - name: Publish to Itch
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.ITCHIO_TOKEN}}
+          CHANNEL: HTML
+          ITCH_GAME: star-knight 
+          ITCH_USER: stampede-studios
+          PACKAGE: "${{ steps.export.outputs.archive_directory }}/star-knigth-web.zip"

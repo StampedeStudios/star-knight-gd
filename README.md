@@ -17,7 +17,7 @@ Simple space shooter reinvented with [Godot Engine](https://godotengine.org/)!
 In this game, you control a spaceship and your objective is to destroy waves of enemy spaceships. The player can move the spaceship using the arrow keys and shoot projectiles at the enemies using the space bar. Get the highest score in an infinite amount of enemies that keep getting strong and stronger.
 
 ## Assets
-All sprites are made in pixel-art using [Asperite](https://www.aseprite.org/). Color are inspired by [Steam Lords](https://lospec.com/palette-list/steam-lords) created by Slynyrd!
+All sprites are made in pixel-art using [Asperite](https://www.aseprite.org/). Color are inspired by [Steam Lords](https://lospec.com/palette-list/steam-lords) created by **Slynyrd**!
 
 All sound effects are made in-house and edited with [Audacity](https://www.audacityteam.org/) and [ChipTone](https://sfbgames.itch.io/chiptone).
 
