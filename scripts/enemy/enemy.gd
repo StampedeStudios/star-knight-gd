@@ -1,7 +1,7 @@
 class_name Enemy
 extends Area2D
 
-signal death(enemy_name: String, enemy_pos: Vector2)
+signal death(checkpoints: Array[Vector2], instance: Enemy)
 
 const EnemyRewards: PackedScene = preload("res://scenes/enemy/Rewards.tscn")
 const Bullet: PackedScene = preload("res://scenes/enemy/EnemyBullet.tscn")
@@ -11,7 +11,7 @@ const MIN_DISTANCE = 5
 @export var enemy_type: Enums.EnemyType = Enums.EnemyType.SHIP
 @export var enemy_data: EnemyData
 
-var steps: Array
+var steps: Array[Vector2]
 var _health: int
 var _velocity: int
 var _burst: int
@@ -36,7 +36,6 @@ func _ready() -> void:
 	_burst = enemy_data.ammo_burst
 	_rate = 60.0 / enemy_data.fire_rate
 	_ammo_count = _burst
-	_last_reached_position = 0
 	_calculate_target_position()
 
 	_hero = SceneManager.get_hero()
@@ -63,6 +62,19 @@ func _process(delta: float) -> void:
 			_shoot()
 
 
+func init(checkpoints: Array[Vector2]) -> void:
+	_last_reached_position = 0
+	steps = checkpoints
+	_is_movement_enabled = true
+	_can_shoot = true
+
+
+func get_hurt(damage: int) -> void:
+	_health -= damage
+	if _health <= 0:
+		_on_enemy_death()
+
+
 func _calculate_target_position() -> void:
 	if _last_reached_position == steps.size() - 1:
 		_last_reached_position = 0
@@ -78,15 +90,11 @@ func _calculate_target_position() -> void:
 	_direction = (_target_position - position).normalized()
 
 
-func get_hurt(damage: int) -> void:
-	_health -= damage
-	if _health <= 0:
-		_on_enemy_death()
-
-
 func _on_enemy_death() -> void:
+	print("%s dead" % self.name)
 	collision_shape_2d.set_deferred("disabled", true)
 	call_deferred("_spawn_reward")
+	death.emit(steps, self)
 	SceneManager.on_enemy_death()
 	collision_shape_2d.set_deferred("disabled", true)
 	animated_sprite_2d.play(Animations.DEATH)
@@ -132,11 +140,6 @@ func _spawn_reward() -> void:
 	get_parent().add_child(reward)
 	reward.position = position
 	reward.init_reward(enemy_data.rewards)
-
-
-func enable() -> void:
-	_is_movement_enabled = true
-	_can_shoot = true
 
 
 class Animations:

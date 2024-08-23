@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_gg1qj")
-odds = 0.3
+odds = 1
 num_ships = 4
 name = "W"
 unit_position = Array[Array]([[1, 5, 5, 11], [3, 9, 9, 13], [6, 10, 10, 0], [8, 14, 14, 4]])

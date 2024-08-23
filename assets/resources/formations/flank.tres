@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_wpdwh")
-odds = 0.3
+odds = 1
 num_ships = 2
 name = "W"
 unit_position = Array[Array]([[10], [14]])

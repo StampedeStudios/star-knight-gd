@@ -11,11 +11,11 @@ const MAX_SHIPS_AMOUNT := 8
 @export var formations: Array[FormationData]
 
 var waves: Array
-var _num_ships_left: int
 var _long_side: float
 var _short_side: float
 var _slot_size: Vector2
 var _patrol_area_position: Vector2
+var _ships: Array[Enemy] = []
 
 
 func _ready() -> void:
@@ -25,37 +25,53 @@ func _ready() -> void:
 	_slot_size = Vector2(_long_side / NUM_SPAWN_COLUMNS, _short_side / NUM_SPAWN_ROWS)
 	_patrol_area_position = Vector2(viewport.x / 2, _short_side / 2)
 
+	var steps: Array[Array] = select_random_formation(5)
+
+	for index in range(0, 5):
+		_spawn_enemy(_get_ship_step_positions(steps[index]))
+
 
 func clean_restart() -> void:
+	# TODO: Fix this function
 	# Starting to spawn enemies
-	_start_wave(0)
+	# _start_wave()
+	pass
 
 
 ## Setup wave to start spawning enemies.
-func _start_wave(index: int) -> void:
-	const START_DELAY: int = 1  # TODO: Set dynamic delay
-	await get_tree().create_timer(START_DELAY, false).timeout
+func _refresh_formation() -> void:
+	var num_ships: int = _ships.size()
+	var steps: Array[Array] = select_random_formation(num_ships)
+	for index in range(0, _ships.size()):
+		_ships[index].init(_get_ship_step_positions(steps[index]))
+	pass
 
-	# Pick random formation with given odds
-	var steps: Array[Array] = select_random_formation()
 
-	print("[Nemesis] Wave %s spawning" % [index + 1])
-	await _spawn_enemy(steps)
+func _on_enemy_death(checkpoints: Array[Vector2], instance: Enemy) -> void:
+	for index in range(0, _ships.size()):
+		if _ships[index] == instance:
+			print("Removed a ship")
+			_ships.remove_at(index)
+			break
 
-	_start_wave(index + 1)
+	print("Ship left: %s" % _ships.size())
+
+	var num_new_ships: int = randi_range(0, 10)
+	if num_new_ships > 3:
+		_spawn_enemy(checkpoints)
+	else:
+		call_deferred("_refresh_formation")
 
 
 ## Handles the spawn of enemies.
-func _spawn_enemy(steps: Array[Array]) -> void:
+func _spawn_enemy(checkpoints: Array[Vector2]) -> void:
 	var enemy := EnemyShip.instantiate()
 	enemy.position = _get_spawn_position()
-	enemy.steps = _get_ship_step_positions(steps[0])
-	enemy.enable()
+	enemy.init(checkpoints)
+	call_deferred("add_child", enemy)
 
-	add_child(enemy)
-
-	const START_DELAY: int = 1
-	await get_tree().create_timer(START_DELAY, false).timeout
+	enemy.connect(Literals.Signals.DEATH, _on_enemy_death)
+	_ships.append(enemy)
 
 
 func reset() -> void:
@@ -63,10 +79,15 @@ func reset() -> void:
 		child.queue_free()
 
 
-func select_random_formation() -> Array[Array]:
+func select_random_formation(num_ships: int) -> Array[Array]:
 	var choice: float = randf_range(0, 1)
 	var sum: float = 0
-	for formation: FormationData in formations:
+
+	var specific_formations: Array[FormationData] = formations.filter(
+		func(f: FormationData) -> bool: return f.num_ships == num_ships
+	)
+
+	for formation: FormationData in specific_formations:
 		sum += formation.odds
 		if choice <= sum:
 			return formation.unit_position
@@ -85,10 +106,10 @@ func _get_ship_position(piece_index: int) -> Vector2:
 	return Vector2(pos_x, pos_y)
 
 
-func _get_ship_step_positions(enemy_steps: Array) -> Array:
-	var positions := Array()
+func _get_ship_step_positions(steps_indexes: Array) -> Array[Vector2]:
+	var positions: Array[Vector2] = []
 
-	for step: int in enemy_steps:
+	for step: int in steps_indexes:
 		positions.append(_get_ship_position(step))
 
 	return positions
